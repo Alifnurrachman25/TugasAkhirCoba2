@@ -53,38 +53,31 @@ class MenuController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-{
-    $validateddata = $request->validate([
-        'name' => 'required|min:3',
-        'modal' => 'required|regex:/([0-9]+[.,]*)+/',
-        'price' => 'required|regex:/([0-9]+[.,]*)+/|gte:modal',
-        'category' => 'required',
-        'image' => 'required|image|file|max:3048',
-        'description' => 'required'
-    ]);
+    {
+        $validateddata = $request->validate([
+           'name' => 'required|min:3',
+           'modal' => 'required|regex:/([0-9]+[.,]*)+/',
+           'price' => 'required|regex:/([0-9]+[.,]*)+/|gte:modal',
+           'category' => 'required',
+           'image' => 'required|image|file|max:3048',
+           'description' => 'required'
+        ]);
 
-    $validateddata["modal"] = filter_var($request->modal, FILTER_SANITIZE_NUMBER_INT);
-    $validateddata["price"] = filter_var($request->price, FILTER_SANITIZE_NUMBER_INT);
 
-    if ($request->hasFile('image')) {
-        $image = $request->file('image');
-        // Simpan ke storage/app/public/menu
-        $path = $image->store('menu', 'public');
-        // Simpan path sebagai storage/menu/... agar bisa diakses pakai asset()
-        $validateddata["picture"] = 'storage/' . $path;
+        $validateddata["modal"] = filter_var($request->modal, FILTER_SANITIZE_NUMBER_INT);
+        $validateddata["price"] = filter_var($request->price, FILTER_SANITIZE_NUMBER_INT);
+        $validateddata["picture"] = $request->file('image')->store('menu');
+
+        Menu::create($validateddata);
+
+        $activity = [
+            'user_id' => Auth::id(),
+            'action' => 'added a menu '.strtolower($request->name)
+        ];
+
+        ActivityLog::create($activity);
+        return redirect('/menu')->with('success','New menu has been added !');
     }
-
-    Menu::create($validateddata);
-
-    $activity = [
-        'user_id' => Auth::id(),
-        'action' => 'added a menu ' . strtolower($request->name)
-    ];
-
-    ActivityLog::create($activity);
-    return redirect('/menu')->with('success', 'New menu has been added!');
-}
-
 
     /**
      * Display the specified resource.
