@@ -53,31 +53,38 @@ class MenuController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-        $validateddata = $request->validate([
-           'name' => 'required|min:3',
-           'modal' => 'required|regex:/([0-9]+[.,]*)+/',
-           'price' => 'required|regex:/([0-9]+[.,]*)+/|gte:modal',
-           'category' => 'required',
-           'image' => 'required|image|file|max:3048',
-           'description' => 'required'
-        ]);
+{
+    $validateddata = $request->validate([
+        'name' => 'required|min:3',
+        'modal' => 'required|regex:/([0-9]+[.,]*)+/',
+        'price' => 'required|regex:/([0-9]+[.,]*)+/|gte:modal',
+        'category' => 'required',
+        'image' => 'required|image|file|max:3048',
+        'description' => 'required'
+    ]);
 
+    $validateddata["modal"] = filter_var($request->modal, FILTER_SANITIZE_NUMBER_INT);
+    $validateddata["price"] = filter_var($request->price, FILTER_SANITIZE_NUMBER_INT);
 
-        $validateddata["modal"] = filter_var($request->modal, FILTER_SANITIZE_NUMBER_INT);
-        $validateddata["price"] = filter_var($request->price, FILTER_SANITIZE_NUMBER_INT);
-        $validateddata["picture"] = $request->file('image')->store('menu');
+    // Store the image in the 'menu' directory
+    $validateddata["picture"] = $request->file('image')->store('/menu');
 
-        Menu::create($validateddata);
+    // Copy the image to the 'public/menu' directory
+    $imagePath = storage_path('app/' . $validateddata["picture"]);
+    $publicPath = storage_path('app/public/menu/' . basename($validateddata["picture"]));
+    copy($imagePath, $publicPath);
 
-        $activity = [
-            'user_id' => Auth::id(),
-            'action' => 'added a menu '.strtolower($request->name)
-        ];
+    Menu::create($validateddata);
 
-        ActivityLog::create($activity);
-        return redirect('/menu')->with('success','New menu has been added !');
-    }
+    $activity = [
+        'user_id' => Auth::id(),
+        'action' => 'added a menu ' . strtolower($request->name)
+    ];
+
+    ActivityLog::create($activity);
+    return redirect('/menu')->with('success', 'New menu has been added!');
+}
+
 
     /**
      * Display the specified resource.
@@ -136,7 +143,7 @@ class MenuController extends Controller
 
         if ($request->file('picture')) {
             Storage::delete($menu->picture);
-            $validateddata['picture'] = $request->file('picture')->store('menu');
+            $validateddata['picture'] = $request->file('picture')->store('/menu');
         }
 
         Menu::where('id', $menu->id)
