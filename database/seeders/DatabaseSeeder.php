@@ -176,7 +176,7 @@ class DatabaseSeeder extends Seeder
                 'modal' => 12000,
                 'price' => 17000,
                 'description' => 'Bakso isi telur puyuh dengan kuah kaldu sapi hangat.',
-                'picture' => 'menu/bakso-telur.jpg',
+                'picture' => 'menu/bakso-telur.png',
                 'category' => 'food'
             ],
             [
@@ -184,7 +184,7 @@ class DatabaseSeeder extends Seeder
                 'modal' => 15000,
                 'price' => 20000,
                 'description' => 'Bakso super besar isi daging cincang dan telur.',
-                'picture' => 'menu/bakso-jumbo.jpg',
+                'picture' => 'menu/bakso-jumbo.png',
                 'category' => 'food'
             ],
             [
@@ -192,7 +192,7 @@ class DatabaseSeeder extends Seeder
                 'modal' => 13000,
                 'price' => 18000,
                 'description' => 'Mie kuning dengan bakso campur, tahu, dan sayur.',
-                'picture' => 'menu/mie-bakso.jpg',
+                'picture' => 'menu/mie-bakso.png',
                 'category' => 'food'
             ],
             [
@@ -200,7 +200,7 @@ class DatabaseSeeder extends Seeder
                 'modal' => 7000,
                 'price' => 10000,
                 'description' => 'Tahu isi daging bakso, cocok sebagai camilan.',
-                'picture' => 'menu/tahu-bakso.jpg',
+                'picture' => 'menu/tahu-bakso.png',
                 'category' => 'food'
             ],
             [
@@ -208,7 +208,7 @@ class DatabaseSeeder extends Seeder
                 'modal' => 2000,
                 'price' => 4000,
                 'description' => 'Minuman segar teh manis dingin.',
-                'picture' => 'menu/es-teh.jpg',
+                'picture' => 'menu/es-teh.png',
                 'category' => 'drink'
             ],
             [
@@ -216,7 +216,7 @@ class DatabaseSeeder extends Seeder
                 'modal' => 2500,
                 'price' => 5000,
                 'description' => 'Perasan jeruk segar dengan es batu.',
-                'picture' => 'menu/es-jeruk.jpg',
+                'picture' => 'menu/es-jeruk.png',
                 'category' => 'drink'
             ],
             [
@@ -224,7 +224,7 @@ class DatabaseSeeder extends Seeder
                 'modal' => 1500,
                 'price' => 3000,
                 'description' => 'Teh manis disajikan hangat.',
-                'picture' => 'menu/teh-hangat.jpg',
+                'picture' => 'menu/teh-hangat.png',
                 'category' => 'drink'
             ]
         ];

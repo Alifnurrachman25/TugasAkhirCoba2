@@ -7,6 +7,7 @@ use App\Models\Menu;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Facades\Image;
 
 class MenuController extends Controller
 {
@@ -66,13 +67,19 @@ class MenuController extends Controller
     $validateddata["modal"] = filter_var($request->modal, FILTER_SANITIZE_NUMBER_INT);
     $validateddata["price"] = filter_var($request->price, FILTER_SANITIZE_NUMBER_INT);
 
-    // Store the image in the 'menu' directory
-    $validateddata["picture"] = $request->file('image')->store('/menu');
+    // Proses image resize
+    $image = $request->file('image');
+    $filename = uniqid() . '.' . $image->getClientOriginalExtension();
+    $resizePath = public_path('storage/menu/' . $filename);
 
-    // Copy the image to the 'public/menu' directory
-    $imagePath = storage_path('app/' . $validateddata["picture"]);
-    $publicPath = storage_path('app/public/menu/' . basename($validateddata["picture"]));
-    copy($imagePath, $publicPath);
+    // Resize to 600x400 (ubah sesuai kebutuhan)
+    Image::make($image)->resize(300, 300, function ($constraint) {
+        $constraint->aspectRatio(); // menjaga rasio
+        $constraint->upsize();      // mencegah membesarkan gambar kecil
+    })->save($resizePath);
+
+    // Simpan nama file ke database (tanpa '/storage/' di awal)
+    $validateddata["picture"] = 'menu/' . $filename;
 
     Menu::create($validateddata);
 
@@ -82,6 +89,7 @@ class MenuController extends Controller
     ];
 
     ActivityLog::create($activity);
+
     return redirect('/menu')->with('success', 'New menu has been added!');
 }
 
@@ -177,4 +185,3 @@ class MenuController extends Controller
     }
 
 }
-
