@@ -78,8 +78,12 @@ class MenuController extends Controller
         $constraint->upsize();      // mencegah membesarkan gambar kecil
     })->save($resizePath);
 
-    // Simpan nama file ke database (tanpa '/storage/' di awal)
-    $validateddata["picture"] = 'menu/' . $filename;
+    // Store the image in the 'menu' directory
+    $validateddata["picture"] = $request->file('image')->store('/menu');
+    // Copy the image to the 'public/menu' directory
+    $imagePath = storage_path('app/' . $validateddata["picture"]);
+    $publicPath = storage_path('app/public/menu/' . basename($validateddata["picture"]));
+    copy($imagePath, $publicPath);
 
     Menu::create($validateddata);
 
@@ -136,35 +140,60 @@ class MenuController extends Controller
      */
     public function update(Request $request, Menu $menu)
     {
-        $validateddata = $request->validate([
-            'name' => 'required|min:3',
-            'modal' => 'required|regex:/([0-9]+[.,]*)+/',
-            'price' => 'required|regex:/([0-9]+[.,]*)+/|gte:modal',
-            'category' => 'required',
-            'picture' => 'image|file|max:3048',
-            'description' => 'required'
-        ]);
+      $validateddata = $request->validate([
+        'name' => 'required|min:3',
+        'modal' => 'required|regex:/([0-9]+[.,]*)+/',
+        'price' => 'required|regex:/([0-9]+[.,]*)+/|gte:modal',
+        'category' => 'required',
+        'image' => 'image|file|max:3048', // opsional
+        'description' => 'required'
+    ]);
 
+    $validateddata["modal"] = filter_var($request->modal, FILTER_SANITIZE_NUMBER_INT);
+    $validateddata["price"] = filter_var($request->price, FILTER_SANITIZE_NUMBER_INT);
 
-        $validateddata["modal"] = filter_var($request->modal, FILTER_SANITIZE_NUMBER_INT);
-        $validateddata["price"] = filter_var($request->price, FILTER_SANITIZE_NUMBER_INT);
+    if ($request->hasFile('picture')) {
+        // Hapus gambar lama jika ada
+        if ($menu->picture) {
+            $oldPublicPath = 'public/' . $menu->picture;
+            $oldPrivatePath = $menu->picture;
 
-        if ($request->file('picture')) {
-            Storage::delete($menu->picture);
-            $validateddata['picture'] = $request->file('picture')->store('/menu');
+            if (Storage::exists($oldPublicPath)) {
+                Storage::delete($oldPublicPath);
+            }
+
+            if (Storage::exists($oldPrivatePath)) {
+                Storage::delete($oldPrivatePath);
+            }
         }
 
-        Menu::where('id', $menu->id)
-             ->update($validateddata);
+        // Simpan gambar baru di storage/app/menu
+        $validateddata["picture"] = $request->file('picture')->store('/menu');
 
-        $activity = [
-            'user_id' => Auth::id(),
-            'action' => 'edited a menu '.strtolower($menu->name)
-        ];
-        ActivityLog::create($activity);
+        // Resize dan simpan versi tampil ke public_path
+        $filename = basename($validateddata["picture"]);
+        $resizePath = public_path('storage/menu/' . $filename);
 
-        return redirect('/menu')->with('success', 'menu has been updated !');
+        Image::make($request->file('picture'))->resize(600, 400, function ($constraint) {
+            $constraint->aspectRatio();
+            $constraint->upsize();
+        })->save($resizePath);
+
+        // Copy file ke storage/app/public/menu
+        $imagePath = storage_path('app/' . $validateddata["picture"]);
+        $publicCopyPath = storage_path('app/public/menu/' . $filename);
+        copy($imagePath, $publicCopyPath);
     }
+
+    $menu->update($validateddata);
+
+    ActivityLog::create([
+        'user_id' => Auth::id(),
+        'action' => 'updated a menu ' . strtolower($request->name)
+    ]);
+
+    return redirect('/menu')->with('success', 'Menu has been updated!');
+}
 
     /**
      * Remove the specified resource from storage.
