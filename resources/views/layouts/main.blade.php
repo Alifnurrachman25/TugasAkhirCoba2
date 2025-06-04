@@ -1,43 +1,43 @@
 <!DOCTYPE html>
-<html lang="en"> 
+<html lang="en">
 <head>
     <title>
-        {{ 
-            Request::is('/') ? 'Dashboard' : 
-            (Request::is('activityLog') ? 'ActivityLog' : 
-            (Request::is('menu') ? 'Alls Menu' : 
-            (Request::is('menu/create') ? 'Add New Menu' : 
-            (Request::is('menu/*/edit') ? 'Edit Menu' : 
-            (Request::is('transaction') ? 'Transaction' : 
-            (Request::is('transaction/create') ? 'Make Order' : 
-            (Request::is('user') ? 'Alls employee' : 
+        {{
+            Request::is('/') ? 'Dashboard' :
+            (Request::is('activityLog') ? 'ActivityLog' :
+            (Request::is('menu') ? 'Alls Menu' :
+            (Request::is('menu/create') ? 'Add New Menu' :
+            (Request::is('menu/*/edit') ? 'Edit Menu' :
+            (Request::is('transaction') ? 'Transaction' :
+            (Request::is('transaction/create') ? 'Make Order' :
+            (Request::is('user') ? 'Alls employee' :
             (Request::is('user/create') ? 'Add New employee' :
             (Request::is('account') ? 'My Account' :
             (Request::is('user/*/edit') ? 'Edit employee' :
             (Request::is('user/edit/*') ? 'Edit Profile' :
             (Request::is('user/*') ? 'My Profile' :
-            'appantuh'    
-            ))))))))))))     
+            'appantuh'
+            ))))))))))))
         }}
     </title>
-    
+
     <!-- Meta -->
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="/images/logofood.ico"> 
-    
+    <link rel="shortcut icon" href="/images/logofood.ico">
+
     <!-- FontAwesome JS-->
     <script defer src="/plugins/fontawesome/js/all.min.js"></script>
 
-    <!-- App CSS -->  
+    <!-- App CSS -->
     <link rel="stylesheet" href="/css/portal.css">
     <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="/fontawesome-free-6.2.1-web/css/all.css">
 
     {{-- trix --}}
     <link rel="stylesheet" type="text/css" href="/css/trix.css">
-    <script type="text/javascript" src="/js/trix.umd.min.js"></script> 
+    <script type="text/javascript" src="/js/trix.umd.min.js"></script>
 
     <style>
         /* trix css  */
@@ -58,10 +58,10 @@
         }
     </style>
 
-</head> 
+</head>
 
 <body class="app">
-    <header class="app-header fixed-top">   
+    <header class="app-header fixed-top">
         @include('layouts.header')
         @include('layouts.sidebar')
     </header>
@@ -77,7 +77,8 @@
     </div>
     <script src="/js/jquery-3.6.3.min.js"></script>
     <script src="/plugins/popper.min.js"></script>
-    <script src="/plugins/bootstrap/js/bootstrap.min.js"></script>  
-    <script src="/js/app.js"></script> 
-    <script src="/js/password.js"></script> 
+    <script src="/plugins/bootstrap/js/bootstrap.min.js"></script>
+    <script src="/js/app.js"></script>
+    <script src="/js/password.js"></script>
+    @stack('scripts')
 </body>

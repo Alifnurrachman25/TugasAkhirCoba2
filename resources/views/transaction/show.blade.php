@@ -110,9 +110,8 @@
                         </div>
 
                         @else
-                        <form action="/transaction/{{ $key->id }}" method="POST" class="card-body">
+                        <form action="{{ route('transaction.pay', $key->id) }}" method="POST" class="card-body">
                             @csrf
-                            @method('put')
                             <input type="hidden" name="id" id="id_transaction" value="{{ $key->id }}">
                             <div class="form-group mb-3">
                                 <label for="name_cashier" class="small text-muted fw-semibold mb-1">NAME ON CASHIER</label>

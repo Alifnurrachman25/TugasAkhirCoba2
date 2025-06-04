@@ -85,6 +85,7 @@
                                 <th class="cell">Total</th>
                                 @can('cashier')
                                 <th class="cell"></th>
+                                <th class="cell"></th>
                                 @endcan
                             </tr>
                         </thead>
@@ -113,7 +114,10 @@
                                     <td class="cell">{{ $item->payment_method }}</td>
                                     <td class="cell">IDR. {{ number_format($item->total_transaction, 0, ',', '.') }}</td>
                                     @can('cashier')
-                                    <td class="cell"><a class="btn-sm app-btn-secondary" href="/transaction/{{ $item->id }}">View</a></td>
+                                    <td class="cell">
+                                        <a class="btn-sm app-btn-secondary" href="/transaction/{{ $item->id }}">View</a>
+                                        <a class="btn-sm app-btn-primary" href="{{ route('transaction.edit', $item->id) }}">Edit</a>
+                                    </td>
                                     @endcan
                                 </tr>
                             @endforeach
@@ -140,6 +144,7 @@
                                 <th class="cell">Status</th>
                                 <th class="cell">Total</th>
                                 @can('cashier')
+                                <th class="cell"></th>
                                 <th class="cell"></th>
                                 @endcan
                             </tr>
@@ -168,7 +173,10 @@
                                     <td class="cell"><span class="badge {{ $item->status == 'paid' ? 'bg-success' : 'bg-danger'}}">{{ $item->status }}</span></td>
                                     <td class="cell">IDR. {{ number_format($item->total_transaction, 0, ',', '.') }}</td>
                                     @can('cashier')
-                                    <td class="cell"><a class="btn-sm app-btn-secondary" href="/transaction/{{ $item->id }}">View</a></td>
+                                    <td class="cell">
+                                        <a class="btn-sm app-btn-secondary" href="/transaction/{{ $item->id }}">View</a>
+                                        <a class="btn-sm app-btn-primary" href="{{ route('transaction.edit', $item->id) }}">Edit</a>
+                                    </td>
                                     @endcan
                                 </tr>
                             @endforeach
@@ -222,7 +230,11 @@
                                     <td class="cell"><span class="badge {{ $item->status == 'paid' ? 'bg-success' : 'bg-danger'}}">{{ $item->status }}</span></td>
                                     <td class="cell">IDR. {{ number_format($item->total_transaction, 0, ',', '.') }}</td>
                                     @can('cashier')
-                                    <td class="cell"><a class="btn-sm app-btn-secondary" href="/transaction/{{ $item->id }}">View</a></td>
+
+                                    <td class="cell">
+                                        <a class="btn-sm app-btn-secondary" href="/transaction/{{ $item->id }}">View</a>
+                                        <a class="btn-sm app-btn-primary" href="{{ route('transaction.edit', $item->id) }}">Edit</a>
+                                    </td>
                                     @endcan
                                 </tr>
                             @endforeach

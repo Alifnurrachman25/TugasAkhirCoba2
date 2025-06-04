@@ -31,6 +31,7 @@ Route::post('/logout', [LoginController::class, 'logout']);
 
 Route::resource('/menu', MenuController::class)->middleware('auth')->missing(fn () => redirect()->back());
 Route::resource('/transaction', TransactionController::class)->middleware('auth')->missing(fn () => redirect()->back());
+Route::post('/transaction/{transaction}/pay', [TransactionController::class, 'pay'])->name('transaction.pay');
 Route::resource('/user', UserController::class)->middleware('auth')->missing(fn () => redirect()->back());
 Route::post('/user/delete', [UserController::class, 'destroy'])->middleware('auth');
 Route::get('/user/edit/{user}', function (User $user) {

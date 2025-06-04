@@ -98,7 +98,7 @@ class TransactionController extends Controller
         $transaction = $request->validate([
             'no_table' => 'required',
             'total_transaction' => 'required',
-            'payment_method' => 'required|in:cash,cashless' // Validasi opsi pembayaran
+            'payment_method' => 'required|in:cash,cashless'
         ]);
         $transaction['user_id'] = auth()->user()->id;
         $transaction['total_payment'] = 0;
@@ -158,10 +158,24 @@ class TransactionController extends Controller
      * @param  \App\Models\Transaction  $transaction
      * @return \Illuminate\Http\Response
      */
-    public function edit(Transaction $transaction)
-    {
-        //
+    public function edit($id)
+{
+    $user = Auth::user();
+
+    // Cegah akses user yang tidak diperbolehkan
+    if ($user->level_id === 1 || $user->level_id === 3) {
+        return redirect()->back();
     }
+
+    $transaction = Transaction::with(['transaction_details.menu'])->findOrFail($id);
+
+    return view('transaction.edit', [
+        'transaction' => $transaction,
+        'foods' => Menu::where('category', 'food')->latest()->get(),
+        'drinks' => Menu::where('category', 'drink')->latest()->get(),
+        'desserts' => Menu::where('category', 'dessert')->latest()->get()
+    ]);
+}
 
     /**
      * Update the specified resource in storage.
@@ -170,7 +184,44 @@ class TransactionController extends Controller
      * @param  \App\Models\Transaction  $transaction
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Transaction $transaction)
+    public function update(Request $request, $id)
+{
+
+
+    $request->validate([
+        'no_table' => 'required',
+        'total_transaction' => 'required|numeric',
+        'payment_method' => 'required|in:cash,cashless',
+        'menu_id' => 'required',
+    ]);
+
+
+    $transaction = Transaction::findOrFail($id);
+    $transaction->no_table = $request->no_table;
+    $transaction->total_transaction = $request->total_transaction;
+    $transaction->payment_method = $request->payment_method;
+    $transaction->updated_at = Carbon::now();
+    $transaction->save();
+
+    // Hapus detail lama
+    TransactionDetail::where('transaction_id', $id)->delete();
+
+
+    // Simpan detail baru
+    $menu_id = json_decode($request->menu_id);
+    foreach ($menu_id as $item) {
+        TransactionDetail::create([
+            'transaction_id' => $id,
+            'menu_id' => $item->menu_id,
+            'qty' => $item->qty,
+            'price' => $item->price
+        ]);
+    }
+
+    return redirect('/transaction')->with('success', 'Transaction updated successfully!');
+}
+
+ public function pay(Request $request, Transaction $transaction)
     {
 
         $validateddata = $request->validate([
