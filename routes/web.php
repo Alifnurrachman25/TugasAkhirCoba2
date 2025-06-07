@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ActivityLogController;
+use App\Http\Controllers\CapitalTodayController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\MenuController;
@@ -53,5 +54,10 @@ Route::get('/invoice/{transaction}', function (Transaction $transaction) {
         'data' => $transaction->with(['transaction_details', 'transaction_details.menu', 'user'])->where('id',$transaction->id)->get()
     ]);
 });
+
+Route::middleware(['auth', 'can:manager'])->group(function () {
+    Route::get('/capital', [CapitalTodayController::class, 'index'])->name('capital');
+});
+
 
 Route::get('/report', [ReportController::class, 'index'])->middleware('auth');

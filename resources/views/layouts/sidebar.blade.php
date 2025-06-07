@@ -90,6 +90,18 @@
                 </li>
                 @endcan
 
+                @can('manager')
+                <li class="nav-item">
+                    <a class="nav-link {{ Request::is('capital') ? 'active' : '' }}" href="/capital">
+                        <span class="nav-icon">
+                            <i class="fa-solid fa-coins"></i>
+                        </span>
+                        <span class="nav-link-text">Perhitungan Modal Hari Ini</span>
+                    </a>
+                </li>
+                @endcan
+
+
                 @cannot('cashier')
                 <li class="nav-item">
                     <a class="nav-link {{ Request::is("activityLog") ? 'active' : '' }}" href="/activityLog">

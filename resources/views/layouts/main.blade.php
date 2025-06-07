@@ -16,7 +16,7 @@
             (Request::is('user/*/edit') ? 'Edit employee' :
             (Request::is('user/edit/*') ? 'Edit Profile' :
             (Request::is('user/*') ? 'My Profile' :
-            'appantuh'
+            'Bakso Pak TUM'
             ))))))))))))
         }}
     </title>
