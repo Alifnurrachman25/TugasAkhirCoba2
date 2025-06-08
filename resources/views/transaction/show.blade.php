@@ -136,6 +136,17 @@
                                     </div>
                                 @enderror
                             </div>
+                            <div class="form-group mb-3">
+                                <label class="small text-muted fw-semibold mb-1">PRESET TOTAL PAYMENT</label>
+                                    <div class="d-flex gap-2 flex-wrap">
+                                        <button type="button" class="btn btn-outline-secondary btn-sm" onclick="setPreset(15000)">15.000</button>
+                                        <button type="button" class="btn btn-outline-secondary btn-sm" onclick="setPreset(20000)">20.000</button>
+                                        <button type="button" class="btn btn-outline-secondary btn-sm" onclick="setPreset(25000)">25.000</button>
+                                        <button type="button" class="btn btn-outline-secondary btn-sm" onclick="setPreset(30000)">30.000</button>
+                                        <button type="button" class="btn btn-outline-secondary btn-sm" onclick="setPreset(50000)">50.000</button>
+                                    </div>
+                                </div>
+
                             <div class="row mb-md-5 mt-4">
                                 <div class="col">
                                     <button type="submit" onclick="show_my_receipt2()" class="text-white btn btn-primary w-100 btn-block ">PAY {{ number_format($key->total_transaction, 0, ',', '.') }}</button>
@@ -182,6 +193,13 @@
             myWindow.focus();
         }
     }
+
+    function setPreset(value) {
+        const formatted = value.toLocaleString('id-ID'); // format angka Indonesia
+        total_paymentFormat.value = formatted;
+        total_paymentInput.value = value;
+    }
+
 </script>
 <script src="/js/formatmoney.js"></script>
 @endsection

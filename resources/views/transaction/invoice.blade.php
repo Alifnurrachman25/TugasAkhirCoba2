@@ -19,8 +19,8 @@
     <div class="card">
         <div class="card-body mx-4">
             <div class="container">
-            <p class="my-5 mb-0 text-center" style="font-size: 30px;">Foodoso</p>
-            <p class="mt-0 mb-1 text-center" style="font-size: 15px;">Jl M. H. Thamrin, No. 9</p>
+            <p class="my-5 mb-0 text-center" style="font-size: 30px;">Bakso Pak TUM</p>
+            <p class="mt-0 mb-1 text-center" style="font-size: 15px;">Jl. Parangtritis No.8</p>
             <p class="mt-0 mb-4 text-center" style="font-size: 15px;">221-691-6080</p>
             @foreach ($data as $key)
                 @php
@@ -76,33 +76,53 @@
                         </div>
                     </div>
                     <div class="col-xl-12">
-                        <p class="float-end fw-bold">Total &nbsp: &nbsp {{ number_format($key->total_transaction, 0,',','.') }}</p>
+                        <p class="float-end fw-bold">Total yang harus dibayar &nbsp: &nbsp {{ number_format($key->total_transaction, 0,',','.') }}</p>
+                    </div>
+                    <div>
+                        <p class="float-end fw-bold total-payment">Total pembayaran &nbsp: &nbsp {{ number_format($key->total_payment, 0, ',', '.') }}</p>
                     </div>
                     <hr style="border: 2px solid black;">
                 </div>
-                <h2 class="float-end total-payment">{{ number_format($key->total_payment, 0, ',', '.') }}</h2>
+                <h2 class="float-end kembalian" style="margin-top: 20px;">Kembalian: -</h2>
             @endforeach
             <div class="text-center" style="margin-top: 90px;">
-                <p class="mb-0 d-flex align-items-center justify-content-center"><u class="text-info text-decoration-none"><img src="/images/logofood.png" alt="" srcset="" width="20">Foodoso</u></p>
-                <p>Thanks for joining us at Foodoso. </p>
+                <p class="mb-0 d-flex align-items-center justify-content-center"><u class="text-info text-decoration-none"><img src="/images/logofood.png" alt="" srcset="" width="20">Bakso Pak TUM</u></p>
+                <p>Thanks for joining us at Bakso Pak Tum. </p>
             </div>
 
             </div>
         </div>
     </div>
     <script>
-        window.onload = function () {
-            let totalPayment = document.querySelector('.total-payment');
+    window.onload = function () {
+        let totalPaymentEl = document.querySelector('.total-payment');
+        let kembalianEl = document.querySelector('.kembalian');
+        let fromStorage = localStorage.getItem('payment');
 
-            if (totalPayment.innerText == '0') {
-                totalPayment.innerText = localStorage.getItem('payment');
-            } else {
-                localStorage.clear();
-                return false;
-            }
-
-            window.print();
+        if (totalPaymentEl.innerText == '0' && fromStorage) {
+            totalPaymentEl.innerText = fromStorage;
+        } else {
+            fromStorage = totalPaymentEl.innerText;
         }
-    </script>
+
+        // Ambil angka dari teks total dan total payment
+        let totalStr = "{{ $key->total_transaction }}";
+        let total = parseInt(totalStr);
+        let paidStr = fromStorage.toString().replace(/[^\d]/g, ''); // ambil hanya angka
+        let paid = parseInt(paidStr);
+
+        let kembalian = paid - total;
+
+        if (kembalian >= 0) {
+            kembalianEl.innerText = "Kembalian: " + kembalian.toLocaleString('id-ID');
+        } else {
+            kembalianEl.innerText = "Kembalian: 0";
+        }
+
+        localStorage.clear();
+        window.print();
+    }
+</script>
+
 </body>
 </html>

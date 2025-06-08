@@ -61,3 +61,5 @@ Route::middleware(['auth', 'can:manager'])->group(function () {
 
 
 Route::get('/report', [ReportController::class, 'index'])->middleware('auth');
+
+
