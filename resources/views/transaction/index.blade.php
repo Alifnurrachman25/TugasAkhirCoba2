@@ -104,7 +104,7 @@
                                     <td class="cell">
                                         <span class="truncate">
                                             @foreach ($item->transaction_details as $el)
-                                                {{ $el->menu->name.',' }}
+                                                {{ $el->menu->name ?? '[Menu Dihapus]' }},
                                             @endforeach
                                         </span>
                                     </td>

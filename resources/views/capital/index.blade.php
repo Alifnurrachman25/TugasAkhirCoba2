@@ -15,19 +15,24 @@
                 <th>No</th>
                 <th>Menu</th>
                 <th>Qty</th>
-                <th>Harga Modal</th>
-                <th>Harga Jual</th>
+                <th>Harga Modal / Item</th>
+                <th>Total Modal</th>
+                <th>Harga Jual / Item</th>
+                <th>Total Harga Jual</th>
             </tr>
         </thead>
         <tbody>
+            @php $no = 1; @endphp
             @foreach($todayTransactions as $trx)
                 @foreach($trx->transaction_details as $detail)
                 <tr>
-                    <td>{{ $loop->iteration }}</td>
-                    <td>{{ $detail->menu->name }}</td>
+                    <td>{{ $no++ }}</td>
+                    <td>{{ $detail->menu->name ?? '[Menu Dihapus]' }}</td>
                     <td>{{ $detail->qty }}</td>
-                    <td>Rp {{ number_format($detail->menu->modal, 0, ',', '.') }}</td>
-                    <td>Rp {{ number_format($detail->price, 0, ',', '.') }}</td>
+                    <td>Rp {{ number_format($detail->menu->modal ?? 0, 0, ',', '.') }}</td>
+                    <td>Rp {{ number_format(($detail->menu->modal ?? 0) * $detail->qty, 0, ',', '.') }}</td>
+                    <td>Rp {{ number_format($detail->price / max($detail->qty, 1), 0, ',', '.') }}</td>
+                    <td>Rp {{ number_format($detail->price * $detail->qty, 0, ',', '.') }}</td>
                 </tr>
                 @endforeach
             @endforeach
