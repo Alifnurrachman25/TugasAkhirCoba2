@@ -203,13 +203,14 @@ class MenuController extends Controller
      */
     public function destroy(Menu $menu)
     {
-        Storage::delete($menu->picture);
-        $menu->destroy($menu->id);
+        $menu->delete(); // Soft delete
+
         $activity = [
             'user_id' => Auth::id(),
             'action' => 'deleted a menu '.strtolower($menu->name)
         ];
         ActivityLog::create($activity);
+
         return redirect('/menu');
     }
 

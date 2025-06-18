@@ -49,7 +49,7 @@
                     <input type="number" class="form-control qty-input" min="1" value="{{ $detail->qty }}" required>
                 </div>
                 <div class="col-md-2">
-                    <input type="number" class="form-control price-input" value="{{ $detail->price }}" readonly>
+                    <input type="number" class="form-control price-input" value="{{ $detail->qty * $detail->menu->price }}" readonly>
                 </div>
                 <div class="col-md-2">
                     <button type="button" class="btn btn-danger remove-item">Remove</button>
@@ -66,54 +66,84 @@
 
 @push('scripts')
 <script>
-    // Tambahkan baris item baru
-    document.getElementById('add-item').addEventListener('click', function () {
-        let container = document.getElementById('item-container');
-        let row = container.querySelector('.item-row').cloneNode(true);
-        row.querySelectorAll('select, input').forEach(input => input.value = '');
-        container.appendChild(row);
-    });
+function updatePricePerRow(row) {
+    const qty = parseInt(row.querySelector('.qty-input').value) || 0;
+    const menuSelect = row.querySelector('.menu-select');
+    const selectedOption = menuSelect.options[menuSelect.selectedIndex];
+    const pricePerItem = parseInt(selectedOption.getAttribute('data-price')) || 0;
 
-    // Hapus baris item
-    document.addEventListener('click', function (e) {
-        if (e.target.classList.contains('remove-item')) {
-            if (document.querySelectorAll('.item-row').length > 1) {
-                e.target.closest('.item-row').remove();
-            }
+    const subtotal = qty * pricePerItem;
+    row.querySelector('.price-input').value = subtotal;
+}
+
+function updateTotal() {
+    let total = 0;
+    document.querySelectorAll('.item-row').forEach(function (row) {
+        const price = parseInt(row.querySelector('.price-input').value) || 0;
+        total += price;
+    });
+    document.getElementById('total_transaction').value = total;
+}
+
+// Tambah item
+document.getElementById('add-item').addEventListener('click', function () {
+    let container = document.getElementById('item-container');
+    let row = container.querySelector('.item-row').cloneNode(true);
+    row.querySelectorAll('select, input').forEach(input => {
+        input.value = '';
+    });
+    container.appendChild(row);
+    updatePricePerRow(row); // hitung subtotal awal untuk row baru
+    updateTotal(); // Update total setelah tambah item
+});
+
+// Hapus item
+document.addEventListener('click', function (e) {
+    if (e.target.classList.contains('remove-item')) {
+        if (document.querySelectorAll('.item-row').length > 1) {
+            e.target.closest('.item-row').remove();
+            updateTotal(); // Update total setelah hapus item
         }
-    });
-
-    // Update harga ketika menu dipilih
-    document.addEventListener('change', function (e) {
-        if (e.target.classList.contains('menu-select')) {
-            let selected = e.target.options[e.target.selectedIndex];
-            let price = selected.getAttribute('data-price');
-            e.target.closest('.item-row').querySelector('.price-input').value = price;
-        }
-    });
-
-    // Persiapkan data sebelum dikirim
-    function prepareData() {
-        let items = [];
-        let total = 0;
-        document.querySelectorAll('.item-row').forEach(function (row) {
-            let menuId = row.querySelector('.menu-select').value;
-            let qty = parseInt(row.querySelector('.qty-input').value);
-            let price = parseInt(row.querySelector('.price-input').value);
-
-            if (menuId && qty && price) {
-                items.push({
-                    menu_id: menuId,
-                    qty: qty,
-                    price: price
-                });
-                total += qty * price;
-            }
-        });
-
-        document.getElementById('menu_id_field').value = JSON.stringify(items);
-        document.getElementById('total_transaction').value = total;
-        return true;
     }
+});
+
+// Saat menu atau qty berubah
+document.addEventListener('input', function (e) {
+    if (e.target.classList.contains('qty-input') || e.target.classList.contains('menu-select')) {
+        const row = e.target.closest('.item-row');
+        updatePricePerRow(row);
+        updateTotal();
+    }
+});
+
+// Persiapan sebelum submit
+function prepareData() {
+    let items = [];
+    let total = 0;
+
+    document.querySelectorAll('.item-row').forEach(function (row) {
+        const menuId = row.querySelector('.menu-select').value;
+        const qty = parseInt(row.querySelector('.qty-input').value);
+        const price = parseInt(row.querySelector('.price-input').value);
+
+        if (menuId && qty && price) {
+            items.push({
+                menu_id: menuId,
+                qty: qty,
+                price: price
+            });
+            total += price;
+        }
+    });
+
+    document.getElementById('menu_id_field').value = JSON.stringify(items);
+    document.getElementById('total_transaction').value = total;
+    return true;
+}
+
+// Hitung harga awal saat halaman dibuka
+document.querySelectorAll('.item-row').forEach(updatePricePerRow);
+updateTotal();
 </script>
 @endpush
+

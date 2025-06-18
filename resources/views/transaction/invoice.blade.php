@@ -95,33 +95,38 @@
     </div>
     <script>
     window.onload = function () {
-        let totalPaymentEl = document.querySelector('.total-payment');
-        let kembalianEl = document.querySelector('.kembalian');
-        let fromStorage = localStorage.getItem('payment');
+    let totalPaymentEl = document.querySelector('.total-payment');
+    let kembalianEl = document.querySelector('.kembalian');
+    let fromStorage = localStorage.getItem('payment');
 
-        if (totalPaymentEl.innerText == '0' && fromStorage) {
-            totalPaymentEl.innerText = fromStorage;
-        } else {
-            fromStorage = totalPaymentEl.innerText;
-        }
+    // Ambil angka dari teks total pembayaran dari storage (yang user input sebelumnya)
+    let paidStr = fromStorage ? fromStorage.toString().replace(/[^\d]/g, '') : '0';
+    let paid = parseInt(paidStr);
 
-        // Ambil angka dari teks total dan total payment
-        let totalStr = "{{ $key->total_transaction }}";
-        let total = parseInt(totalStr);
-        let paidStr = fromStorage.toString().replace(/[^\d]/g, ''); // ambil hanya angka
-        let paid = parseInt(paidStr);
+    // Ambil angka total yang harus dibayar dari backend
+    let totalStr = "{{ $key->total_transaction }}";
+    let total = parseInt(totalStr);
 
-        let kembalian = paid - total;
+    // Hitung kembalian
+    let kembalian = paid - total;
 
-        if (kembalian >= 0) {
-            kembalianEl.innerText = "Kembalian: " + kembalian.toLocaleString('id-ID');
-        } else {
-            kembalianEl.innerText = "Kembalian: 0";
-        }
-
-        localStorage.clear();
-        window.print();
+    // Tampilkan total pembayaran dari localStorage (jika ada)
+    if (fromStorage) {
+        totalPaymentEl.innerText = parseInt(paid).toLocaleString('id-ID');
     }
+
+    // Tampilkan kembalian
+    if (kembalian >= 0) {
+        kembalianEl.innerText = "Kembalian: " + kembalian.toLocaleString('id-ID');
+    } else {
+        kembalianEl.innerText = "Kembalian: 0";
+    }
+
+    // Hapus localStorage dan langsung print
+    localStorage.removeItem('payment');
+    window.print();
+}
+
 </script>
 
 </body>
