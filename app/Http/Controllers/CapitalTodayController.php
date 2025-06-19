@@ -10,27 +10,28 @@ class CapitalTodayController extends Controller
 {
      public function index()
     {
-        $todayTransactions = Transaction::with(['transaction_details.menu'])
-                                ->where('status', 'paid')
-                                ->whereDate('created_at', Carbon::today())
-                                ->get();
+        // $todayTransactions = Transaction::with(['transaction_details.menu'])
+        //                         ->where('status', 'paid')
+        //                         ->whereDate('created_at', Carbon::today())
+        //                         ->get();
 
-        $modalHariIni = 0;
-        $keuntunganHariIni = 0;
+        // $modalHariIni = 0;
+        // $keuntunganHariIni = 0;
 
-        foreach ($todayTransactions as $transaksi) {
-            foreach ($transaksi->transaction_details as $detail) {
-                $menu = $detail->menu;
+        // foreach ($todayTransactions as $transaksi) {
+        //     foreach ($transaksi->transaction_details as $detail) {
+        //         $menu = $detail->menu;
 
-                $hargaModal = $menu->modal ?? 0;
-                $hargaJual = $detail->price;
-                $qty = $detail->qty;
+        //         $hargaModal = $menu->modal ?? 0;
+        //         $hargaJual = $detail->price;
+        //         $qty = $detail->qty;
 
-                $modalHariIni += $hargaModal * $qty;
-                $keuntunganHariIni += ($hargaJual - $hargaModal) * $qty;
-            }
-        }
+        //         $modalHariIni += $hargaModal * $qty;
+        //         $keuntunganHariIni += ($hargaJual - $hargaModal) * $qty;
+        //     }
+        // }
 
-        return view('capital.index', compact('modalHariIni', 'keuntunganHariIni', 'todayTransactions'));
+        // return view('capital.index', compact('modalHariIni', 'keuntunganHariIni', 'todayTransactions'));
+
     }
 }

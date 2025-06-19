@@ -54,7 +54,7 @@
                         </div>
                     </div>
                     <span class="fw-semibold d-block mb-1 text-dark">Pemasukan</span>
-                    <small class="text-success fw-semibold"><i class="bx bx-up-arrow-alt"></i>Rp {{ number_format($total_income[0]->total_income,0,',','.') }} </small>
+                    {{-- <small class="text-success fw-semibold"><i class="bx bx-up-arrow-alt"></i>Rp {{ number_format($total_income[0]->total_income,0,',','.') }} </small> --}}
                 </div>
             </div>
         </div>

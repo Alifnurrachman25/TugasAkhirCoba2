@@ -26,7 +26,7 @@
                         </div>
                         @enderror
                     </div>
-                    <div class="mb-3">
+                    {{-- <div class="mb-3">
                         <label for="modal" class="form-label">Modal</label>
                         <input type="text" class="form-control @error('modal') is-invalid @enderror" id="modal" name="modal" value="{{ old('modal', number_format($menu->modal,0,',','.')) }}" required>
                         @error('modal')
@@ -34,7 +34,7 @@
                                 {{ $message }}
                             </div>
                         @enderror
-                    </div>
+                    </div> --}}
                     <div class="mb-3">
                         <label for="price" class="form-label">Price</label>
                         <input type="text" name="price" class="form-control" id="price" value="{{ old('price', number_format($menu->price,0,',','.') )}}" required>
@@ -87,7 +87,7 @@
             black_screen.innerHTML = `${files.name} <p> click to change </p>`
         });
     })
-    
+
 </script>
 <script src="/js/formatmoney.js"></script>
 @endsection

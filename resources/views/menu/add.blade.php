@@ -14,7 +14,7 @@
                     </div>
                 @enderror
             </div>
-            <div class="mb-3">
+            {{-- <div class="mb-3">
                 <label for="modal" class="form-label">Modal</label>
                 <input type="text" class="form-control @error('modal') is-invalid @enderror" id="modal" name="modal" value="{{ old('modal') }}" required>
                 @error('modal')
@@ -22,7 +22,7 @@
                         {{ $message }}
                     </div>
                 @enderror
-            </div>
+            </div> --}}
             <div class="mb-3">
                 <label for="price" class="form-label">Price</label>
                 <input type="text" class="form-control @error('price') is-invalid @enderror" id="price" name="price" value="{{ old('price') }}" required>
@@ -78,7 +78,7 @@
         const img_preview = document.querySelector('.img-preview');
         const view_path_img = document.querySelector('.view-path-img');
         const select_image = document.querySelector('.select-image');
-        
+
         img.addEventListener('change', function() {
             const files = img.files[0];
             const fileReader = new FileReader();

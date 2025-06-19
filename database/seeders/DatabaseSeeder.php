@@ -165,7 +165,7 @@ class DatabaseSeeder extends Seeder
         $menuBakso = [
             [
                 'name' => 'Bakso Urat',
-                'modal' => 10000,
+                // 'modal' => 10000,
                 'price' => 15000,
                 'description' => 'Bakso sapi dengan urat kenyal dan kuah kaldu gurih.',
                 'picture' => 'menu/bakso-urat.png',
@@ -173,7 +173,7 @@ class DatabaseSeeder extends Seeder
             ],
             [
                 'name' => 'Bakso Telur',
-                'modal' => 12000,
+                // 'modal' => 12000,
                 'price' => 17000,
                 'description' => 'Bakso isi telur puyuh dengan kuah kaldu sapi hangat.',
                 'picture' => 'menu/bakso-telur.png',
@@ -181,7 +181,7 @@ class DatabaseSeeder extends Seeder
             ],
             [
                 'name' => 'Bakso Jumbo',
-                'modal' => 15000,
+                // 'modal' => 15000,
                 'price' => 20000,
                 'description' => 'Bakso super besar isi daging cincang dan telur.',
                 'picture' => 'menu/bakso-jumbo.png',
@@ -189,7 +189,7 @@ class DatabaseSeeder extends Seeder
             ],
             [
                 'name' => 'Mie Bakso Komplit',
-                'modal' => 13000,
+                // 'modal' => 13000,
                 'price' => 18000,
                 'description' => 'Mie kuning dengan bakso campur, tahu, dan sayur.',
                 'picture' => 'menu/mie-bakso.png',
@@ -197,7 +197,7 @@ class DatabaseSeeder extends Seeder
             ],
             [
                 'name' => 'Tahu Bakso',
-                'modal' => 7000,
+                // 'modal' => 7000,
                 'price' => 10000,
                 'description' => 'Tahu isi daging bakso, cocok sebagai camilan.',
                 'picture' => 'menu/tahu-bakso.png',
@@ -205,7 +205,7 @@ class DatabaseSeeder extends Seeder
             ],
             [
                 'name' => 'Es Teh Manis',
-                'modal' => 2000,
+                // 'modal' => 2000,
                 'price' => 4000,
                 'description' => 'Minuman segar teh manis dingin.',
                 'picture' => 'menu/es-teh.png',
@@ -213,7 +213,7 @@ class DatabaseSeeder extends Seeder
             ],
             [
                 'name' => 'Es Jeruk',
-                'modal' => 2500,
+                // 'modal' => 2500,
                 'price' => 5000,
                 'description' => 'Perasan jeruk segar dengan es batu.',
                 'picture' => 'menu/es-jeruk.png',
@@ -221,7 +221,7 @@ class DatabaseSeeder extends Seeder
             ],
             [
                 'name' => 'Teh Hangat',
-                'modal' => 1500,
+                // 'modal' => 1500,
                 'price' => 3000,
                 'description' => 'Teh manis disajikan hangat.',
                 'picture' => 'menu/teh-hangat.png',

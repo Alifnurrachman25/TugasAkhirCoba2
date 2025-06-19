@@ -8,6 +8,7 @@ use App\Http\Controllers\MenuController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ModalController;
 use Illuminate\Support\Facades\Route;
 use App\Models\Transaction;
 use App\Models\User;
@@ -55,9 +56,14 @@ Route::get('/invoice/{transaction}', function (Transaction $transaction) {
     ]);
 });
 
-Route::middleware(['auth', 'can:manager'])->group(function () {
-    Route::get('/capital', [CapitalTodayController::class, 'index'])->name('capital');
-});
+// Route::middleware(['auth', 'can:manager'])->group(function () {
+//     Route::get('/capital', [CapitalTodayController::class, 'index'])->name('capital');
+// });
+
+
+Route::get('/modal', [ModalController::class, 'index'])->name('modal.index');
+Route::post('/modal', [ModalController::class, 'store'])->name('modal.store');
+
 
 
 Route::get('/report', [ReportController::class, 'index'])->middleware('auth');

@@ -57,14 +57,14 @@ class MenuController extends Controller
 {
     $validateddata = $request->validate([
         'name' => 'required|min:3',
-        'modal' => 'required|regex:/([0-9]+[.,]*)+/',
+        // 'modal' => 'required|regex:/([0-9]+[.,]*)+/',
         'price' => 'required|regex:/([0-9]+[.,]*)+/|gte:modal',
         'category' => 'required',
         'image' => 'required|image|file|max:3048',
         'description' => 'required'
     ]);
 
-    $validateddata["modal"] = filter_var($request->modal, FILTER_SANITIZE_NUMBER_INT);
+    // $validateddata["modal"] = filter_var($request->modal, FILTER_SANITIZE_NUMBER_INT);
     $validateddata["price"] = filter_var($request->price, FILTER_SANITIZE_NUMBER_INT);
 
     // Proses image resize
@@ -142,14 +142,14 @@ class MenuController extends Controller
     {
       $validateddata = $request->validate([
         'name' => 'required|min:3',
-        'modal' => 'required|regex:/([0-9]+[.,]*)+/',
+        // 'modal' => 'required|regex:/([0-9]+[.,]*)+/',
         'price' => 'required|regex:/([0-9]+[.,]*)+/|gte:modal',
         'category' => 'required',
         'image' => 'image|file|max:3048', // opsional
         'description' => 'required'
     ]);
 
-    $validateddata["modal"] = filter_var($request->modal, FILTER_SANITIZE_NUMBER_INT);
+    // $validateddata["modal"] = filter_var($request->modal, FILTER_SANITIZE_NUMBER_INT);
     $validateddata["price"] = filter_var($request->price, FILTER_SANITIZE_NUMBER_INT);
 
     if ($request->hasFile('picture')) {

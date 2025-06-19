@@ -90,13 +90,24 @@
                 </li>
                 @endcan
 
-                @can('manager')
+                {{-- @can('manager')
                 <li class="nav-item">
                     <a class="nav-link {{ Request::is('capital') ? 'active' : '' }}" href="/capital">
                         <span class="nav-icon">
                             <i class="fa-solid fa-coins"></i>
                         </span>
-                        <span class="nav-link-text">Perhitungan Modal Hari Ini</span>
+                        <span class="nav-link-text">Perhitungan Modal</span>
+                    </a>
+                </li>
+                @endcan --}}
+
+                @can('manager')
+                <li class="nav-item">
+                    <a class="nav-link {{ Request::is('modal') ? 'active' : '' }}" href="/modal">
+                        <span class="nav-icon">
+                            <i class="fa-solid fa-coins"></i>
+                        </span>
+                        <span class="nav-link-text">Perhitungan Modal</span>
                     </a>
                 </li>
                 @endcan
