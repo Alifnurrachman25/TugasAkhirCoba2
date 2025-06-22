@@ -63,6 +63,11 @@ Route::get('/invoice/{transaction}', function (Transaction $transaction) {
 
 Route::get('/modal', [ModalController::class, 'index'])->name('modal.index');
 Route::post('/modal', [ModalController::class, 'store'])->name('modal.store');
+Route::get('/modal/create', [ModalController::class, 'create'])->name('modal.create');
+Route::get('/modal/{id}/edit', [ModalController::class, 'edit'])->name('modal.edit');
+Route::put('/modal/{id}', [ModalController::class, 'update'])->name('modal.update');
+Route::delete('/modal/{id}', [ModalController::class, 'destroy'])->name('modal.destroy');
+
 
 
 

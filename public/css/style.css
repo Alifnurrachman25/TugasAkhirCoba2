@@ -9,6 +9,17 @@
     cursor: pointer;
 }
 
+/*Tambahan slide up alert*/
+.alert-slide-up {
+    transition: all 0.5s ease;
+    opacity: 0;
+    transform: translateY(-10px);
+    margin: 0;
+    padding: 0;
+    height: 0;
+    overflow: hidden;
+}
+
 .bg-create {
     background-color: #820d0d;
 }

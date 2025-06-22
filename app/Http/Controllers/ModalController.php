@@ -41,6 +41,45 @@ class ModalController extends Controller
             'jumlah' => (int) $jumlah,
         ]);
 
-        return redirect()->back()->with('success', 'Data modal berhasil ditambahkan.');
+        return redirect()->route('modal.index')->with('success', 'Data modal berhasil ditambahkan.');
     }
+    public function create()
+    {
+        return view('modal.create');
+    }
+
+    public function edit($id)
+    {
+        $modal = Modal::findOrFail($id);
+        return view('modal.edit', compact('modal'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'deskripsi' => 'required|string|max:255',
+            'jumlah' => 'required',
+        ]);
+
+        // Bersihkan format "Rp" dan titik dari jumlah
+        $jumlah = preg_replace('/[^0-9]/', '', $request->jumlah);
+
+        $modal = Modal::findOrFail($id);
+        $modal->update([
+            'deskripsi' => $request->deskripsi,
+            'jumlah' => $jumlah,
+        ]);
+
+        return redirect()->route('modal.index')->with('success', 'Modal berhasil diperbarui.');
+    }
+
+
+    public function destroy($id)
+    {
+        $modal = Modal::findOrFail($id);
+        $modal->delete();
+
+        return redirect()->route('modal.index')->with('success', 'Modal berhasil dihapus.');
+    }
+
 }

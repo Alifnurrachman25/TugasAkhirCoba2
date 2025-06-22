@@ -25,10 +25,20 @@
         </div>
         </div>
     </div>
-    @if (session()->has('success'))
-    <div class="alert alert-dark alert-dismissible fade show" role="alert">
+    {{-- ALERT FLASH --}}
+    @if(session('success'))
+    <div id="alert-success" class="alert alert-success alert-dismissible fade show" role="alert">
         {{ session('success') }}
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
+     </div>
     @endif
 </div>
+
+<script>
+        setTimeout(function () {
+            const alert = document.getElementById('alert-success');
+            if (alert) {
+                alert.classList.add('alert-slide-up');
+                setTimeout(() => alert.remove(), 500);
+            }
+        }, 3000);
+ </script>
