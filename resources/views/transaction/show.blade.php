@@ -144,6 +144,7 @@
                                         <button type="button" class="btn btn-outline-secondary btn-sm" onclick="setPreset(25000)">25.000</button>
                                         <button type="button" class="btn btn-outline-secondary btn-sm" onclick="setPreset(30000)">30.000</button>
                                         <button type="button" class="btn btn-outline-secondary btn-sm" onclick="setPreset(50000)">50.000</button>
+                                        <button type="button" class="btn btn-outline-secondary btn-sm" onclick="setPreset(100000)">100.000</button>
                                     </div>
                                 </div>
 

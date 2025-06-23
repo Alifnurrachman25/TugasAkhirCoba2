@@ -17,8 +17,8 @@
     {{-- TABS --}}
     <nav class="app-nav-tabs nav shadow-sm flex-column flex-sm-row mb-4" id="modal-tabs">
         <a class="flex-sm-fill text-sm-center nav-link active" data-bs-toggle="tab" href="#modal-today" role="tab">Hari Ini</a>
-        <a class="flex-sm-fill text-sm-center nav-link" data-bs-toggle="tab" href="#modal-week" role="tab">Minggu Ini</a>
         <a class="flex-sm-fill text-sm-center nav-link" data-bs-toggle="tab" href="#modal-month" role="tab">Bulan Ini</a>
+        <a class="flex-sm-fill text-sm-center nav-link" data-bs-toggle="tab" href="#modal-all" role="tab">Semua</a>
     </nav>
 
     <div class="tab-content" id="modal-tab-content">
@@ -48,12 +48,12 @@
             </div>
         </div>
 
-        {{-- MINGGU INI --}}
-        <div class="tab-pane fade" id="modal-week" role="tabpanel">
+        {{-- BULAN INI --}}
+        <div class="tab-pane fade" id="modal-month" role="tabpanel">
             <div class="app-card shadow-sm mb-4 p-3">
-                <h5>Total Modal Minggu Ini: Rp {{ number_format($totalMingguIni, 0, ',', '.') }}</h5>
+                <h5>Total Modal Bulan Ini: Rp {{ number_format($totalBulanIni, 0, ',', '.') }}</h5>
                 <ul class="mt-3">
-                    @forelse($modalMingguIni as $item)
+                    @forelse($modalBulanIni as $item)
                         <li class="d-flex justify-content-between align-items-center my-3">
                             <span>
                                 {{ $item->created_at->format('d M Y H:i') }} - {{ $item->deskripsi }}: Rp {{ number_format($item->jumlah, 0, ',', '.') }}
@@ -74,12 +74,12 @@
             </div>
         </div>
 
-        {{-- BULAN INI --}}
-        <div class="tab-pane fade" id="modal-month" role="tabpanel">
+        {{-- SEMUA --}}
+        <div class="tab-pane fade" id="modal-all" role="tabpanel">
             <div class="app-card shadow-sm mb-4 p-3">
-                <h5>Total Modal Bulan Ini: Rp {{ number_format($totalBulanIni, 0, ',', '.') }}</h5>
+                <h5>Total Semua Modal: Rp {{ number_format($totalSemua, 0, ',', '.') }}</h5>
                 <ul class="mt-3">
-                    @forelse($modalBulanIni as $item)
+                    @forelse($modalSemua as $item)
                         <li class="d-flex justify-content-between align-items-center my-3">
                             <span>
                                 {{ $item->created_at->format('d M Y H:i') }} - {{ $item->deskripsi }}: Rp {{ number_format($item->jumlah, 0, ',', '.') }}
