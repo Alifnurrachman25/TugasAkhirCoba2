@@ -16,7 +16,7 @@
                         <span class="nav-icon">
                             <i class="fa-solid fa-house-chimney"></i>
                         </span>
-                        <span class="nav-link-text">Overview</span>
+                        <span class="nav-link-text">Dashboard</span>
                     </a>
                 </li>
 
@@ -26,15 +26,15 @@
                         <span class="nav-icon">
                             <i class="fa-solid fa-user"></i>
                         </span>
-                        <span class="nav-link-text">Employee</span>
+                        <span class="nav-link-text">Karyawan</span>
                         <span class="submenu-arrow">
                             <i class="fa-solid fa-chevron-down arrow"></i>
                         </span>
                     </a>
                     <div id="submenu-3" class="submenu submenu-3 {{ Request::is('user') ? 'collapse show' : (Request::is('user/create') ? 'collapse show' : 'collapse') }}" data-bs-parent="#menu-accordion">
                         <ul class="submenu-list list-unstyled">
-                            <li class="submenu-item"><a class="submenu-link {{ Request::is('user') ? 'active' :  ''}}" href="/user">All Employee's</a></li>
-                            <li class="submenu-item"><a class="submenu-link {{ Request::is('user/create') ? 'active' :  ''}}" href="/user/create">Add New Employee</a></li>
+                            <li class="submenu-item"><a class="submenu-link {{ Request::is('user') ? 'active' :  ''}}" href="/user">Tampilkan semua karyawan</a></li>
+                            <li class="submenu-item"><a class="submenu-link {{ Request::is('user/create') ? 'active' :  ''}}" href="/user/create">Tambah karyawan</a></li>
                         </ul>
                     </div>
                 </li>
@@ -53,8 +53,8 @@
                     </a>
                     <div id="submenu-1" class="submenu submenu-1 {{ Request::is('menu') ? 'collapse show' : (Request::is('menu/create') ? 'collapse show' : 'collapse') }}" data-bs-parent="#menu-accordion">
                         <ul class="submenu-list list-unstyled">
-                            <li class="submenu-item"><a class="submenu-link {{ Request::is('menu') ? 'active' :  ''}}" href="/menu">All Menu's</a></li>
-                            <li class="submenu-item"><a class="submenu-link {{ Request::is('menu/create') ? 'active' :  ''}}" href ="/menu/create">Add New Menu</a></li>
+                            <li class="submenu-item"><a class="submenu-link {{ Request::is('menu') ? 'active' :  ''}}" href="/menu">Tampilkan semua menu</a></li>
+                            <li class="submenu-item"><a class="submenu-link {{ Request::is('menu/create') ? 'active' :  ''}}" href ="/menu/create">Tambah menu baru</a></li>
                         </ul>
                     </div>
                 </li>
@@ -66,7 +66,7 @@
                         <span class="nav-icon">
                             <i class="fa-solid fa-dollar-sign"></i>
                         </span>
-                        <span class="nav-link-text">All Transactions</span>
+                        <span class="nav-link-text">Semua transaksi</span>
                     </a>
                 </li>
                 <li class="nav-item">
@@ -74,7 +74,7 @@
                         <span class="nav-icon">
                             <i class="fa-solid fa-plus"></i>
                         </span>
-                        <span class="nav-link-text">Make Order</span>
+                        <span class="nav-link-text">Buat pesanan</span>
                     </a>
                 </li>
                 @endcan
@@ -85,7 +85,7 @@
                         <span class="nav-icon">
                             <i class="fa-solid fa-dollar-sign"></i>
                         </span>
-                        <span class="nav-link-text">All Transactions</span>
+                        <span class="nav-link-text">Semua transaksi</span>
                     </a>
                 </li>
                 @endcan
@@ -119,7 +119,7 @@
                         <span class="nav-icon">
                             <i class="fa-solid fa-clipboard-list"></i>
                         </span>
-                        <span class="nav-link-text">Activity Log</span>
+                        <span class="nav-link-text">Log aktivitas</span>
                     </a>
                 </li>
                 @endcannot
