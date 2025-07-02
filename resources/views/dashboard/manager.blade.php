@@ -1,79 +1,99 @@
-<div class="col-lg-8 mb-4 shadow rounded d-flex align-items-center bg-transparent">
-    <div class="card w-100">
-        <div class="d-flex align-items-end row justify-content-center">
-            <div class="col-sm-12 ps-3 text-center">
-                <div class="card-body">
-                    <h5 class="card-title text-primary">Welcome Back {{ auth()->user()->name }} 🎉</h5>
-                    <p class="mb-4 text-dark">
-                        Selamat menjalani hari ini!
-                    </p>
-                </div>
+{{-- Header Welcome --}}
+<div class="col-12 mb-4">
+    <div class="card shadow-sm rounded text-center">
+        <div class="card-body my-5">
+            <h4 class="text-primary mb-1">Welcome Back, {{ auth()->user()->name }} 🎉</h4>
+            <p class="text-muted mb-0">Selamat menjalani hari ini!</p>
+        </div>
+    </div>
+</div>
+
+{{-- Kategori Hari Ini --}}
+<div class="col-12">
+    <h5 class="fw-bold text-dark">📅 Data Hari Ini</h5>
+</div>
+
+<div class="col-md-6 col-lg-3 mb-4">
+    <div class="card shadow-sm text-center">
+        <div class="card-body">
+            <img src="images/icons/unicons/dollar-sign.png" width="36" class="mb-2" />
+            <div class="fw-semibold text-dark">Penjualan</div>
+            <div class="text-success fw-semibold small">
+                Rp {{ number_format($total_sales[0]->total_sales,0,',','.') }}
             </div>
         </div>
     </div>
 </div>
 
+<div class="col-md-6 col-lg-3 mb-4">
+    <div class="card shadow-sm text-center">
+        <div class="card-body">
+            <img src="images/icons/unicons/menu-info.png" width="36" class="mb-2" />
+            <div class="fw-semibold text-dark">Menu</div>
+            <div class="text-success fw-semibold small">{{ $total_menus }}</div>
+        </div>
+    </div>
+</div>
 
-<div class="col-lg-4 col-md-4 order-1">
-    <div class="row ps-2 d-flex justify-content-evenly">
-        <div class="col-lg-5 col-md-12 col-6 mb-4 shadow rounded">
-            <div class="card">
-                <div class="card-body">
-                    <div class="card-title d-flex align-items-start justify-content-between">
-                        <div class="avatar flex-shrink-0">
-                            <img src="images/icons/unicons/dollar-sign.png" width="40" alt="chart success"
-                                class="rounded" />
-                        </div>
-                    </div>
-                    <span class="fw-semibold d-block mb-1 text-dark">Penjualan</span>
-                    <small class="text-success fw-semibold"><i class="bx bx-up-arrow-alt"></i>Rp {{ number_format($total_sales[0]->total_sales,0,',','.') }}</small>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-5 col-md-12 col-6 mb-4 shadow rounded">
-            <div class="card">
-                <div class="card-body">
-                    <div class="card-title d-flex align-items-start justify-content-between">
-                        <div class="avatar flex-shrink-0">
-                            <img src="images/icons/unicons/menu-info.png" width="40" alt="Credit Card"
-                                class="rounded" />
-                        </div>
-                    </div>
-                    <span class="fw-semibold d-block mb-1 text-dark">Menu's</span>
-                    <small class="text-success fw-semibold"><i class="bx bx-up-arrow-alt"></i> {{ $total_menus }}</small>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-5 col-md-12 col-6 mb-4 shadow rounded">
-            <div class="card">
-                <div class="card-body">
-                    <div class="card-title d-flex align-items-start justify-content-between">
-                        <div class="avatar flex-shrink-0">
-                            <img src="images/icons/unicons/wallet.png" width="40" alt="Credit Card"
-                                class="rounded" />
-                        </div>
-                    </div>
-                    <span class="fw-semibold d-block mb-1 text-dark">Pemasukan</span>
-                    <small class="text-success fw-semibold">
-                        <i class="bx bx-up-arrow-alt"></i>
-                        Rp {{ number_format($total_income, 0, ',', '.') }}
-                    </small>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-5 col-md-12 col-6 mb-4 shadow rounded">
-            <div class="card">
-                <div class="card-body">
-                    <div class="card-title d-flex align-items-start justify-content-between">
-                        <div class="avatar flex-shrink-0">
-                            <img src="images/icons/unicons/wallet-info.png" width="40" alt="Credit Card"
-                                class="rounded" />
-                        </div>
-                    </div>
-                    <span class="fw-semibold d-block mb-1 text-dark">Bukti pembayaran</span>
-                    <small class="text-success fw-semibold"><i class="bx bx-up-arrow-alt"></i> {{ $invoice[0]->total_invoice }}</small>
-                </div>
+<div class="col-md-6 col-lg-3 mb-4">
+    <div class="card shadow-sm text-center">
+        <div class="card-body">
+            <img src="images/icons/unicons/wallet.png" width="36" class="mb-2" />
+            <div class="fw-semibold text-dark">Keuntungan</div>
+            <div class="text-success fw-semibold small">
+                Rp {{ number_format($total_income, 0, ',', '.') }}
             </div>
         </div>
     </div>
 </div>
+
+<div class="col-md-6 col-lg-3 mb-4">
+    <div class="card shadow-sm text-center">
+        <div class="card-body">
+            <img src="images/icons/unicons/wallet-info.png" width="36" class="mb-2" />
+            <div class="fw-semibold text-dark">Bukti Pembayaran</div>
+            <div class="text-success fw-semibold small">{{ $invoice[0]->total_invoice }}</div>
+        </div>
+    </div>
+</div>
+
+{{-- Divider Bulan Ini --}}
+<div class="col-12 mt-3">
+    <h5 class="fw-bold text-dark">📊 Rekap Bulan Ini</h5>
+</div>
+
+<div class="row">
+    <div class="col-md-4 mb-4">
+        <div class="card shadow-sm text-center bg-light h-100">
+            <div class="card-body">
+                <h6 class="fw-semibold text-primary">Total Penjualan Bulan Ini</h6>
+                <p class="text-success fw-bold mb-0 fs-5">
+                    Rp {{ number_format($total_payment_bulan_ini, 0, ',', '.') }}
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4 mb-4">
+        <div class="card shadow-sm text-center bg-success bg-opacity-10 h-100">
+            <div class="card-body">
+                <h6 class="fw-semibold text-success">Total Keuntungan Bulan Ini</h6>
+                <p class="text-success fw-bold mb-0 fs-5">
+                    Rp {{ number_format($total_keuntungan_bulan_ini, 0, ',', '.') }}
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4 mb-4">
+        <div class="card shadow-sm text-center bg-light h-100">
+            <div class="card-body">
+                <h6 class="fw-semibold text-danger">Total Modal Bulan Ini</h6>
+                <p class="text-danger fw-bold mb-0 fs-5">
+                    Rp {{ number_format($total_modal_bulan_ini, 0, ',', '.') }}
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+

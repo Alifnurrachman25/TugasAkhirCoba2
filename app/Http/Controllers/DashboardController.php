@@ -21,9 +21,15 @@ class DashboardController extends Controller
         // $totalModal = Modal::whereBetween('created_at', [$startOfMonth, $endOfMonth])->sum('jumlah');
 
         $today = now()->toDateString();
+        $startOfMonth = now()->startOfMonth();
+        $endOfMonth = now()->endOfMonth();
 
         $totalPayment = Transaction::whereDate('created_at', $today)->sum('total_transaction');
         $totalModal = Modal::whereDate('created_at', $today)->sum('jumlah');
+        $totalPaymentBulanIni = Transaction::whereBetween('created_at', [$startOfMonth, $endOfMonth])->sum('total_transaction');
+        $totalModalBulanIni = Modal::whereBetween('created_at', [$startOfMonth, $endOfMonth])->sum('jumlah');
+        $totalKeuntunganBulanIni = $totalPaymentBulanIni - $totalModalBulanIni;
+
 
         return view('home', [
             "total_menus" => Menu::all()->count(),
@@ -38,7 +44,11 @@ class DashboardController extends Controller
             'total_user' => User::select(User::raw('COUNT(id) as total_user'))->get(),
             'total_paid' => Transaction::select(Transaction::raw('COUNT(id) as total_paid'))->where('status','paid')->get(),
             'total_unpaid' => Transaction::select(Transaction::raw('COUNT(id) as total_unpaid'))->where('status','unpaid')->get(),
-            'tables' => Transaction::select(Transaction::raw('COUNT(no_table) as tables'))->where('status','unpaid')->get()
+            'tables' => Transaction::select(Transaction::raw('COUNT(no_table) as tables'))->where('status','unpaid')->get(),
+            'total_payment_bulan_ini' => $totalPaymentBulanIni,
+            'total_modal_bulan_ini' => $totalModalBulanIni,
+            'total_keuntungan_bulan_ini' => $totalKeuntunganBulanIni,
+
         ]);
     }
 }
