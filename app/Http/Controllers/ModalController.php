@@ -12,14 +12,17 @@ class ModalController extends Controller
     {
         $today = now()->toDateString();
         $startOfMonth = now()->startOfMonth();
+        $startOfWeek = now()->startOfWeek();
 
         return view('modal.index', [
             'modalHariIni' => Modal::whereDate('created_at', $today)->get(),
+            'modalMingguIni' => Modal::whereBetween('created_at', [$startOfWeek, now()])->get(),
             'modalBulanIni' => Modal::whereBetween('created_at', [$startOfMonth, now()])->get(),
-            'modalSemua' => Modal::orderBy('created_at', 'desc')->get(),
+            // 'modalSemua' => Modal::orderBy('created_at', 'desc')->get(),
             'totalHariIni' => Modal::whereDate('created_at', $today)->sum('jumlah'),
+            'totalMingguIni' => Modal::whereBetween('created_at', [$startOfWeek, now()])->sum('jumlah'),
             'totalBulanIni' => Modal::whereBetween('created_at', [$startOfMonth, now()])->sum('jumlah'),
-            'totalSemua' => Modal::sum('jumlah'),
+            // 'totalSemua' => Modal::sum('jumlah'),
         ]);
     }
 

@@ -20,6 +20,11 @@
     overflow: hidden;
 }
 
+/* Tambahan background grey */
+.bg-abu {
+    background-color: #545454;
+}
+
 .bg-create {
     background-color: #820d0d;
 }

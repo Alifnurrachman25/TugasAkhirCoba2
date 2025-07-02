@@ -34,6 +34,9 @@
     <link rel="stylesheet" href="/css/portal.css">
     <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="/fontawesome-free-6.2.1-web/css/all.css">
+    {{-- Bootstrap --}}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+
 
     {{-- trix --}}
     <link rel="stylesheet" type="text/css" href="/css/trix.css">
