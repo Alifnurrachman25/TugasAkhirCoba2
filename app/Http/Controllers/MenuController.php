@@ -27,7 +27,7 @@ class MenuController extends Controller
         return view('menu.index', [
             'foods' => $menu->where('category','food')->latest()->get(),
             'drinks' => $menu->where('category', 'drink')->latest()->get(),
-            'dessert' => $menu->where('category', 'dessert')->latest()->get()
+            // 'dessert' => $menu->where('category', 'dessert')->latest()->get()
         ]);
     }
 
@@ -53,12 +53,12 @@ class MenuController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-{
+    public function store(Request $request){
+
     $validateddata = $request->validate([
         'name' => 'required|min:3',
         // 'modal' => 'required|regex:/([0-9]+[.,]*)+/',
-        'price' => 'required|regex:/([0-9]+[.,]*)+/|gte:modal',
+        'price' => 'required|regex:/([0-9]+[.,]*)+/',
         'category' => 'required',
         'image' => 'required|image|file|max:3048',
         'description' => 'required'
@@ -143,7 +143,7 @@ class MenuController extends Controller
       $validateddata = $request->validate([
         'name' => 'required|min:3',
         // 'modal' => 'required|regex:/([0-9]+[.,]*)+/',
-        'price' => 'required|regex:/([0-9]+[.,]*)+/|gte:modal',
+        'price' => 'required|regex:/([0-9]+[.,]*)+/',
         'category' => 'required',
         'image' => 'image|file|max:3048', // opsional
         'description' => 'required'

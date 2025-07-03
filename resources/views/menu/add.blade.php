@@ -38,7 +38,7 @@
                     <option selected disabled hidden>- select category -</option>
                     <option value="food"  @if (old('category') == "food") {{ 'selected' }} @endif >Food</option>
                     <option value="drink"  @if (old('category') == "drink") {{ 'selected' }} @endif >Drink</option>
-                    <option value="dessert"  @if (old('category') == "dessert") {{ 'selected' }} @endif >Dessert</option>
+                    {{-- <option value="dessert"  @if (old('category') == "dessert") {{ 'selected' }} @endif >Dessert</option> --}}
                 </select>
                 @error('category')
                     <div class="invalid-feedback">

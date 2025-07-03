@@ -4,13 +4,13 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="/images/logofood.ico"> 
+    <link rel="shortcut icon" href="/images/logofood.ico">
     <title>Report</title>
 
     <!-- FontAwesome JS-->
     <script defer src="/plugins/fontawesome/js/all.min.js"></script>
 
-    <!-- App CSS -->  
+    <!-- App CSS -->
     <link rel="stylesheet" href="/css/portal.css">
     <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="/fontawesome-free-6.2.1-web/css/all.css">
@@ -21,7 +21,7 @@
             <div class="col d-flex flex-column align-items-center">
                 <img src="/images/logofood.png" class="mb-3" alt="" srcset="" width="60">
                 <h2>FOODOSO</h2>
-                <p class="mb-1">Jl M. H. Thamrin, No. 9</p> 
+                <p class="mb-1">Jl M. H. Thamrin, No. 9</p>
                 <p class="mb-1">221-691-6080</p>
             </div>
             <hr class="mt-3" style="border: 2px solid black;">
@@ -39,7 +39,6 @@
                 <th scope="col">Total</th>
                 @can('manager')
                 <th scope="col">Payment</th>
-                <th scope="col">Profit</th>
                 @endcan
             </tr>
             </thead>
@@ -77,7 +76,6 @@
                 <td>Rp. {{ number_format($item->total_transaction, 0, ',', '.') }}</td>
                 @can('manager')
                 <td>Rp. {{ number_format($item->total_payment, 0, ',', '.') }}</td>
-                <td>Rp. {{ number_format($profit_items, 0, ',', '.') }}</td>
                 @endcan
             </tr>
             @endforeach
@@ -89,7 +87,7 @@
                 foreach($data as $item) {
                     $arr_transaction[] = $item->total_transaction;
                 };
-            
+
                 function myfunction($v1,$v2)
                 {
                     return $v1 + $v2;
@@ -98,20 +96,9 @@
                 $total_transaction = array_reduce($arr_transaction, "myfunction");
             @endphp
             <tr>
-                @can('manager')
-                <th colspan="5" class="text-end">Total revenue</th>
-                <td>Rp. {{ number_format($total_transaction, 0, ',', '.') }}</td>
-                @endcan
-
                 @can('cashier')
                 <th colspan="3" class="text-end">Total Transaction's</th>
                 <td>Rp. {{ number_format($total_transaction, 0, ',', '.') }}</td>
-                @endcan
-            </tr>
-            <tr>
-                @can('manager')
-                <th colspan="5" class="text-end">Total profit</th>
-                <td>Rp. {{ number_format($total_profit, 0, ',', '.') }}</td>
                 @endcan
             </tr>
             </tfoot>

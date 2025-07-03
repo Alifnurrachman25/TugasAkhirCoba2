@@ -118,7 +118,7 @@
             </div>
         </div>
 
-        <div class="tab-pane fade" id="dessert">
+        {{-- <div class="tab-pane fade" id="dessert">
             <div class="row g-4">
                 @foreach ($dessert as $item)
                     <div class="col-6 col-md-4 col-xl-3 col-xxl-2 mb-4 mb-lg-0">
@@ -168,7 +168,7 @@
                     </div>
                 @endforeach
             </div>
-        </div>
+        </div> --}}
 
         <div class="modal fade" style="margin-top: 9%; margin-left: 9%;" data-bs-backdrop="static" data-bs-keyboard="false"
             id="show" tabindex="-1" aria-hidden="true">
