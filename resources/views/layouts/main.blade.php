@@ -83,5 +83,6 @@
     <script src="/plugins/bootstrap/js/bootstrap.min.js"></script>
     <script src="/js/app.js"></script>
     <script src="/js/password.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
     @stack('scripts')
 </body>

@@ -17,7 +17,54 @@
     </div>
     <div class="tab-content" data-aos="fade-up" data-aos-delay="300">
         <div class="tab-pane fade active show" id="food">
-            <div class="row g-4">
+            <ul class="sortable-list row g-4 list-unstyled" id="food-list">
+                @foreach ($foods as $food)
+                    <li class="col-6 col-md-4 col-xl-3 col-xxl-2 mb-4 mb-lg-0 menu-item" data-id="{{ $food->id }}">
+                        <div class="card rounded shadow-sm h-100 app-card-doc border-0 card-menu">
+                            <div class="card-body p-4">
+                                <img src="{{ asset('storage/' . $food->picture) }}" class="img-fluid d-block mx-auto mb-3">
+                                <div class="d-flex justify-content-between">
+                                    <h5 class="col-11 text-banner text-primary text-capitalize">{{ $food->name }}</h5>
+                                    <div class="app-card-actions">
+                                        <div class="dropdown">
+                                            <div class="dropdown-toggle no-toggle-arrow mx-3" data-bs-toggle="dropdown" aria-expanded="false">
+                                                <i class="fa-solid fa-ellipsis-vertical" style="cursor: pointer;"></i>
+                                            </div>
+                                            <ul class="dropdown-menu">
+                                                <li>
+                                                    <a class="dropdown-item" id="show-menu" data-bs-toggle="modal" data-bs-target="#show" role="button">
+                                                        <i class="fa-solid fa-eye mx-2"></i> View
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a class="dropdown-item" href="menu/{{ $food->id }}/edit">
+                                                        <i class="fa-solid fa-pen-to-square mx-2"></i> Edit
+                                                    </a>
+                                                </li>
+                                                <li><hr class="dropdown-divider"></li>
+                                                <li>
+                                                    <form action="/menu/{{ $food->id }}" method="POST">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button class="dropdown-item border-0 bg-transparent" onclick="return confirm('are you sure?')">
+                                                            <i class="fa-solid fa-trash-can mx-2"></i> Delete
+                                                        </button>
+                                                    </form>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p class="small price">IDR {{ number_format($food->price, 0, ',', '.') }}</p>
+                            </div>
+                        </div>
+                    </li>
+                @endforeach
+            </ul>
+        </div>
+
+
+            {{-- <div class="row g-4">
                 @foreach ($foods as $food)
                     <div class="col-6 col-md-4 col-xl-3 col-xxl-2 mb-4 mb-lg-0">
                         <div class="card rounded shadow-sm h-100 app-card-doc border-0 card-menu">
@@ -63,10 +110,57 @@
                         </div>
                     </div>
                 @endforeach
-            </div>
+            </div> --}}
         </div>
 
         <div class="tab-pane fade" id="drink">
+            <ul class="sortable-list row g-4 list-unstyled" id="drink-list">
+                @foreach ($drinks as $drink)
+                    <li class="col-6 col-md-4 col-xl-3 col-xxl-2 mb-4 mb-lg-0 menu-item" data-id="{{ $drink->id }}">
+                        <div class="card rounded shadow-sm h-100 app-card-doc border-0 card-menu">
+                            <div class="card-body p-4">
+                                <img src="{{ asset('storage/' . $drink->picture) }}" class="img-fluid d-block mx-auto mb-3">
+                                <div class="d-flex justify-content-between">
+                                    <h5 class="col-11 text-banner text-primary text-capitalize">{{ $drink->name }}</h5>
+                                    <div class="app-card-actions">
+                                        <div class="dropdown">
+                                            <div class="dropdown-toggle no-toggle-arrow mx-3" data-bs-toggle="dropdown" aria-expanded="false">
+                                                <i class="fa-solid fa-ellipsis-vertical" style="cursor: pointer;"></i>
+                                            </div>
+                                            <ul class="dropdown-menu">
+                                                <li>
+                                                    <a class="dropdown-item" id="show-menu" data-bs-toggle="modal" data-bs-target="#show" role="button">
+                                                        <i class="fa-solid fa-eye mx-2"></i> View
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a class="dropdown-item" href="menu/{{ $drink->id }}/edit">
+                                                        <i class="fa-solid fa-pen-to-square mx-2"></i> Edit
+                                                    </a>
+                                                </li>
+                                                <li><hr class="dropdown-divider"></li>
+                                                <li>
+                                                    <form action="/menu/{{ $drink->id }}" method="POST">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button class="dropdown-item border-0 bg-transparent" onclick="return confirm('are you sure?')">
+                                                            <i class="fa-solid fa-trash-can mx-2"></i> Delete
+                                                        </button>
+                                                    </form>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p class="small price">IDR {{ number_format($drink->price, 0, ',', '.') }}</p>
+                            </div>
+                        </div>
+                    </li>
+                @endforeach
+            </ul>
+        </div>
+
+        {{-- <div class="tab-pane fade" id="drink">
             <div class="row g-4">
                 @foreach ($drinks as $drink)
                     <div class="col-6 col-md-4 col-xl-3 col-xxl-2 mb-4 mb-lg-0">
@@ -116,7 +210,7 @@
                     </div>
                 @endforeach
             </div>
-        </div>
+        </div> --}}
 
         {{-- <div class="tab-pane fade" id="dessert">
             <div class="row g-4">
@@ -187,4 +281,29 @@
     </div>
     <script src="/js/jquery-3.6.3.min.js"></script>
     <script src="/js/show.js"></script>
+    <script>
+    $(function () {
+        $('.sortable-list').sortable({
+            update: function (event, ui) {
+                let order = [];
+                $('.menu-item').each(function (index, element) {
+                    order.push($(element).data('id'));
+                });
+
+                $.ajax({
+                    url: '{{ route("menu.updateOrder") }}',
+                    type: 'POST',
+                    data: {
+                        _token: '{{ csrf_token() }}',
+                        order: order
+                    },
+                    success: function (response) {
+                        console.log('Order updated');
+                    }
+                });
+            }
+        });
+    });
+</script>
+
 @endsection

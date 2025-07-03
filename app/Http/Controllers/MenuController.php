@@ -25,10 +25,10 @@ class MenuController extends Controller
         }
 
         return view('menu.index', [
-            'foods' => $menu->where('category','food')->latest()->get(),
-            'drinks' => $menu->where('category', 'drink')->latest()->get(),
-            // 'dessert' => $menu->where('category', 'dessert')->latest()->get()
+            'foods' => $menu->where('category','food')->orderBy('order')->get(),
+            'drinks' => $menu->where('category','drink')->orderBy('order')->get(),
         ]);
+
     }
 
     /**
@@ -213,5 +213,17 @@ class MenuController extends Controller
 
         return redirect('/menu');
     }
+
+    public function updateOrder(Request $request)
+    {
+        $order = $request->order;
+
+        foreach ($order as $index => $menuId) {
+            Menu::where('id', $menuId)->update(['order' => $index]);
+        }
+
+        return response()->json(['status' => 'success']);
+    }
+
 
 }

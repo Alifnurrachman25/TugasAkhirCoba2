@@ -67,6 +67,7 @@ Route::get('/modal/create', [ModalController::class, 'create'])->name('modal.cre
 Route::get('/modal/{id}/edit', [ModalController::class, 'edit'])->name('modal.edit');
 Route::put('/modal/{id}', [ModalController::class, 'update'])->name('modal.update');
 Route::delete('/modal/{id}', [ModalController::class, 'destroy'])->name('modal.destroy');
+Route::post('/menu/update-order', [MenuController::class, 'updateOrder'])->name('menu.updateOrder');
 
 
 
