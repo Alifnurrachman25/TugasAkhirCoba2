@@ -99,6 +99,11 @@
                                 <input type="text" class="form-control form-control-sm" disabled name="total_transaction" id="total_transaction" value="{{ number_format($key->total_transaction, 0, ',', '.') }}">
                             </div>
                             <div class="form-group mb-3">
+                                <label for="payment_method" class="small text-muted fw-semibold mb-1">PAYMENT METHOD</label>
+                                <input type="text" class="form-control form-control-sm" disabled name="payment_method" id="payment_method" value="{{ ucfirst($key->payment_method ?? '-') }}">
+                            </div>
+
+                            <div class="form-group mb-3">
                                 <label for="total_payment" class="small text-muted fw-semibold mb-1">TOTAL PAYMENT</label>
                                 <input type="text" class="form-control form-control-sm" name="total_payment" value="{{ number_format($key->total_payment, 0, ',', '.') }}" id="price" enabled>
                             </div>
@@ -127,6 +132,27 @@
                                 <input type="hidden" id="total" name="total_transaction" value="{{ $key->total_transaction }}">
                             </div>
                             <div class="form-group mb-3">
+                                <label class="small text-muted fw-semibold mb-1">PAYMENT METHOD</label>
+                                <div class="d-flex gap-3">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="payment_method" id="payment_cash" value="cash" required>
+                                        <label class="form-check-label" for="payment_cash">
+                                            Cash
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="payment_method" id="payment_cashless" value="cashless">
+                                        <label class="form-check-label" for="payment_cashless">
+                                            Cashless
+                                        </label>
+                                    </div>
+                                </div>
+                                @error('payment_method')
+                                    <div class="text-danger small mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <div class="form-group mb-3">
                                 <label for="total_payment" class="small text-muted fw-semibold mb-1">TOTAL PAYMENT</label>
                                 <input type="text" class="form-control form-control-sm total_payment @error('total_payment') is-invalid @enderror" id="price">
                                 <input type="hidden" name="total_payment" id="total_payment">
@@ -150,7 +176,7 @@
 
                             <div class="row mb-md-5 mt-4">
                                 <div class="col">
-                                    <button type="submit" onclick="show_my_receipt2()" class="text-white btn btn-primary w-100 btn-block ">PAY {{ number_format($key->total_transaction, 0, ',', '.') }}</button>
+                                    <button type="submit" class="text-white btn btn-primary w-100 btn-block ">PAY {{ number_format($key->total_transaction, 0, ',', '.') }}</button>
                                 </div>
                             </div>
                         </form>

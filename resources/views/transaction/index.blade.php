@@ -81,7 +81,7 @@
                                 <th class="cell text-center">No Table</th>
                                 <th class="cell">Date</th>
                                 <th class="cell">Status</th>
-                                <th class="cell">Payment Method</th>
+                                {{-- <th class="cell">Payment Method</th> --}}
                                 <th class="cell">Total</th>
                                 @can('cashier')
                                 <th class="cell"></th>
@@ -111,11 +111,11 @@
                                     <td class="cell text-center">{{ $item->no_table }}</td>
                                     <td class="cell"><span>{{ $date->toFormattedDateString() }}</span><span class="note">{{ $time[4].' '.$time[5] }}</span></td>
                                     <td class="cell"><span class="badge {{ $item->status == 'paid' ? 'bg-success' : 'bg-danger'}}">{{ $item->status }}</span></td>
-                                    <td class="cell">{{ $item->payment_method }}</td>
+                                    {{-- <td class="cell">{{ $item->payment_method }}</td> --}}
                                     <td class="cell">IDR. {{ number_format($item->total_transaction, 0, ',', '.') }}</td>
                                     @can('cashier')
                                     <td class="cell">
-                                        <a class="btn-sm app-btn-secondary" href="/transaction/{{ $item->id }}">View</a>
+                                        <a class="btn-sm app-btn-secondary mx-3" href="/transaction/{{ $item->id }}">View</a>
                                         <a class="btn-sm app-btn-primary" href="{{ route('transaction.edit', $item->id) }}">Edit</a>
                                     </td>
                                     @endcan
@@ -248,7 +248,7 @@
 </div>
 <script>
     const print = document.getElementById('print');
-    document.querySelectorAll('.nav-link').forEach(function(elem) {
+    document.querySelectorAll('#orders-table-tab .nav-link').forEach(function(elem) {
       elem.addEventListener('click', function(event) {
         let id = elem.getAttribute('id');
         const currentUrl = window.location.href;

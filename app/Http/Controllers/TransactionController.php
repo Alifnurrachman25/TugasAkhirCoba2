@@ -98,7 +98,7 @@ class TransactionController extends Controller
         $transaction = $request->validate([
             'no_table' => 'required',
             'total_transaction' => 'required',
-            'payment_method' => 'required|in:cash,cashless'
+            // 'payment_method' => 'required|in:cash,cashless'
         ]);
         $transaction['user_id'] = auth()->user()->id;
         $transaction['total_payment'] = 0;
@@ -130,7 +130,7 @@ class TransactionController extends Controller
         // // ...
         // $transaction->save();
 
-        return redirect('/transaction')->with('success', 'New transaction successfully created !');
+        return redirect('/transaction/create')->with('success', 'New transaction successfully created !');
     }
 
     /**
@@ -185,48 +185,48 @@ class TransactionController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
-{
-
-
-    $request->validate([
-        'no_table' => 'required',
-        'total_transaction' => 'required|numeric',
-        'payment_method' => 'required|in:cash,cashless',
-        'menu_id' => 'required',
-    ]);
-
-
-    $transaction = Transaction::findOrFail($id);
-    $transaction->no_table = $request->no_table;
-    $transaction->total_transaction = $request->total_transaction;
-    $transaction->payment_method = $request->payment_method;
-    $transaction->updated_at = Carbon::now();
-    $transaction->save();
-
-    // Hapus detail lama
-    TransactionDetail::where('transaction_id', $id)->delete();
-
-
-    // Simpan detail baru
-    $menu_id = json_decode($request->menu_id);
-    foreach ($menu_id as $item) {
-        TransactionDetail::create([
-            'transaction_id' => $id,
-            'menu_id' => $item->menu_id,
-            'qty' => $item->qty,
-            'price' => $item->price
-        ]);
-    }
-
-    return redirect('/transaction')->with('success', 'Transaction updated successfully!');
-}
-
- public function pay(Request $request, Transaction $transaction)
     {
 
+
+        $request->validate([
+            'no_table' => 'required',
+            'total_transaction' => 'required|numeric',
+            // 'payment_method' => 'required|in:cash,cashless',
+            'menu_id' => 'required',
+        ]);
+
+
+        $transaction = Transaction::findOrFail($id);
+        $transaction->no_table = $request->no_table;
+        $transaction->total_transaction = $request->total_transaction;
+        // $transaction->payment_method = $request->payment_method;
+        $transaction->updated_at = Carbon::now();
+        $transaction->save();
+
+        // Hapus detail lama
+        TransactionDetail::where('transaction_id', $id)->delete();
+
+
+        // Simpan detail baru
+        $menu_id = json_decode($request->menu_id);
+        foreach ($menu_id as $item) {
+            TransactionDetail::create([
+                'transaction_id' => $id,
+                'menu_id' => $item->menu_id,
+                'qty' => $item->qty,
+                'price' => $item->price
+            ]);
+        }
+
+        return redirect('/transaction')->with('success', 'Transaction updated successfully!');
+    }
+
+    public function pay(Request $request, Transaction $transaction)
+    {
         $validateddata = $request->validate([
             'total_transaction' => 'required|numeric',
-            'total_payment' => 'required|numeric|gte:total_transaction'
+            'total_payment' => 'required|numeric|gte:total_transaction',
+            'payment_method' => 'required|in:cash,cashless'
         ]);
 
         $validateddata["total_payment"] = filter_var($request->total_payment, FILTER_SANITIZE_NUMBER_INT);
@@ -235,9 +235,9 @@ class TransactionController extends Controller
         Transaction::where('id', $transaction->id)
                     ->update($validateddata);
 
-        return redirect('/transaction')->with('success', 'transaction successfully !');
-
+        return redirect('/transaction')->with('success', 'Transaction successfully paid!');
     }
+
 
 
     /**

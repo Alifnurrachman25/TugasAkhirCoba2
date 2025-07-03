@@ -1,6 +1,8 @@
 @extends('layouts.order')
 
 @section('container')
+
+
     @php
         $tables = json_encode($tables);
         echo "
@@ -33,6 +35,13 @@
                 </div>
             </div> --}}
         </div>
+        @if (session('success'))
+            <div class="alert alert-success alert-dismissible fade show mt-3 mx-3" role="alert" id="success-alert">
+                {{ session('success') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
+
         <div class="wp-menu d-flex flex-column">
             <div class="menu-tr mt-3 mb-3">
                 <ul class="nav nav-tabs d-flex justify-content-center" data-aos="fade-up" data-aos-delay="200">
@@ -176,7 +185,7 @@
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                             data-bs-target="#table">chosee</button>
                     </div>
-                    <div class="section-pay d-flex justify-content-between align-items-center p-2">
+                    {{-- <div class="section-pay d-flex justify-content-between align-items-center p-2">
                         <h6 class="text-white">Choose Payment Method</h6>
                         <div class="form-check">
                             <input class="form-check-input" type="radio" name="payment_method" id="cash" value="cash">
@@ -186,7 +195,7 @@
                             <input class="form-check-input" type="radio" name="payment_method" id="cashless" value="cashless">
                             <label class="form-check-label" for="cashless">Cashless</label>
                         </div>
-                    </div>
+                    </div> --}}
                 </div>
                 <button type="submit"
                     class="w-100 cart-order p-3 mt-3 mb-3 rounded text-center border-0 text-dark bg-white">
@@ -350,4 +359,21 @@
     </div>
     <script src="/js/order.js"></script>
     <script src="/js/formatmoney.js"></script>
+    <script>
+        const successAlert = document.getElementById('success-alert');
+        if (successAlert) {
+            setTimeout(() => {
+                // Menghilangkan dengan animasi Bootstrap fade
+                successAlert.classList.remove('show'); // trigger fade out
+                successAlert.classList.add('fade');    // optional, in case it's not set
+
+                // Hapus dari DOM setelah efek selesai (500ms delay fade Bootstrap)
+                setTimeout(() => {
+                    successAlert.remove();
+                }, 500);
+            }, 3000); // Waktu tampil: 3 detik
+        }
+    </script>
+
+
 @endsection
