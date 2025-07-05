@@ -11,7 +11,7 @@
         @enderror
         <div class="col-12 col-md-4 picture-container" style="display: flex; flex-direction: column; justify-content: center;">
             <img src="{{ asset('storage/'.$menu->picture) }}" alt="" class="img-fluid picture-preview">
-            <input type="file" id="select-picture" name="picture">
+            <input type="file" id="select-picture" name="image">
             <div class="black-screen">{{ $menu->picture }} <p> click to change </p></div>
         </div>
         <div class="col-12 col-md-8">

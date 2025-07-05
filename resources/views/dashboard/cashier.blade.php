@@ -4,7 +4,7 @@
         <div class="card-body my-5">
             <h4 class="text-primary mb-1">Welcome Back, {{ auth()->user()->name }} 🎉</h4>
             <p class="text-black mb-2">Selamat menjalani hari ini!</p>
-            <a href="{{ route('transaction.create') }}" class="btn btn-primary mt-3">
+            <a href="{{ route('transaction.create') }}" class="btn btn-primary btn-lg py-3  fw-bold mt-3" style="padding-left: 200px; padding-right: 200px;">
                 Mulai penjualan
             </a>
         </div>

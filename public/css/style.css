@@ -9,6 +9,41 @@
     cursor: pointer;
 }
 
+/* Tambahan styling create order
+.menu-item-cart {
+    width: 48%;
+    min-height: 130px;
+    padding: 10px;
+    background-color: #fff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+}
+
+.img-container {
+    width: 100px;
+    height: 100px;
+    flex-shrink: 0;
+    overflow: hidden;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f8f8f8;
+}
+
+.menu-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.product h5,
+.product h6 {
+    margin: 0;
+    padding: 0;
+} */
+
 /*Tambahan slide up alert*/
 .alert-slide-up {
     transition: all 0.5s ease;

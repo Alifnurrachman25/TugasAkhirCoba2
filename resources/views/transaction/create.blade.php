@@ -69,7 +69,7 @@
                             <div class="menu-item-cart rounded shadow d-flex align-items-center justify-content-around"
                                 data-id="{{ $food->id }}" style="margin-bottom: 7%;">
                                 <img class="img-fluid" src="{{ asset('storage/' . $food->picture) }}" alt=""
-                                    srcset="" width="150">
+                                    srcset="" width="115">
                                 <div class="d-flex justify-content-center flex-column">
                                     <div class="product">
                                         <h5 style="font-size: 16px; width: 100px;" class="text-break">{{ $food->name }}</h5>
@@ -95,7 +95,7 @@
                             <div class="menu-item-cart rounded shadow d-flex align-items-center justify-content-around"
                                 data-id="{{ $drink->id }}" style="margin-bottom: 7%;">
                                 <img class="img-fluid" src="{{ asset('storage/' . $drink->picture) }}" alt=""
-                                    srcset="" width="150">
+                                    srcset="" width="115">
                                 <div class="d-flex justify-content-center flex-column">
                                     <div class="product">
                                         <h5 style="font-size: 16px; width: 100px;" class="text-break">{{ $drink->name }}</h5>

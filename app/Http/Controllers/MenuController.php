@@ -53,49 +53,54 @@ class MenuController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request){
+    public function store(Request $request)
+    {
+        $validateddata = $request->validate([
+            'name' => 'required|min:3',
+            // 'modal' => 'required|regex:/([0-9]+[.,]*)+/',
+            'price' => 'required|regex:/([0-9]+[.,]*)+/',
+            'category' => 'required',
+            'image' => 'required|image|file|max:3048',
+            'description' => 'required'
+        ]);
 
-    $validateddata = $request->validate([
-        'name' => 'required|min:3',
-        // 'modal' => 'required|regex:/([0-9]+[.,]*)+/',
-        'price' => 'required|regex:/([0-9]+[.,]*)+/',
-        'category' => 'required',
-        'image' => 'required|image|file|max:3048',
-        'description' => 'required'
-    ]);
+        // Bersihkan format harga
+        // $validateddata["modal"] = filter_var($request->modal, FILTER_SANITIZE_NUMBER_INT);
+        $validateddata["price"] = filter_var($request->price, FILTER_SANITIZE_NUMBER_INT);
 
-    // $validateddata["modal"] = filter_var($request->modal, FILTER_SANITIZE_NUMBER_INT);
-    $validateddata["price"] = filter_var($request->price, FILTER_SANITIZE_NUMBER_INT);
+        // Proses crop gambar
+        $image = $request->file('image');
+        $filename = uniqid() . '.' . $image->getClientOriginalExtension();
 
-    // Proses image resize
-    $image = $request->file('image');
-    $filename = uniqid() . '.' . $image->getClientOriginalExtension();
-    $resizePath = public_path('storage/menu/' . $filename);
+        // Path tempat menyimpan hasil crop
+        $resizePath = public_path('storage/menu/' . $filename);
 
-    // Resize to 600x400 (ubah sesuai kebutuhan)
-    Image::make($image)->resize(300, 300, function ($constraint) {
-        $constraint->aspectRatio(); // menjaga rasio
-        $constraint->upsize();      // mencegah membesarkan gambar kecil
-    })->save($resizePath);
+        // Resize dan crop ke ukuran 300x300
+        Image::make($image)
+            ->fit(300, 300, function ($constraint) {
+                $constraint->upsize();
+            })
+            ->save($resizePath);
 
-    // Store the image in the 'menu' directory
-    $validateddata["picture"] = $request->file('image')->store('/menu');
-    // Copy the image to the 'public/menu' directory
-    $imagePath = storage_path('app/' . $validateddata["picture"]);
-    $publicPath = storage_path('app/public/menu/' . basename($validateddata["picture"]));
-    copy($imagePath, $publicPath);
+        // Simpan juga file ke storage/public agar bisa diakses lewat Storage::url
+        $storagePath = 'menu/' . $filename;
+        copy($resizePath, storage_path('app/public/' . $storagePath));
 
-    Menu::create($validateddata);
+        // Simpan path ke database
+        $validateddata["picture"] = $storagePath;
 
-    $activity = [
-        'user_id' => Auth::id(),
-        'action' => 'added a menu ' . strtolower($request->name)
-    ];
+        // Simpan data ke database
+        Menu::create($validateddata);
 
-    ActivityLog::create($activity);
+        // Simpan activity log
+        ActivityLog::create([
+            'user_id' => Auth::id(),
+            'action' => 'added a menu ' . strtolower($request->name)
+        ]);
 
-    return redirect('/menu')->with('success', 'New menu has been added!');
-}
+        return redirect('/menu')->with('success', 'New menu has been added!');
+    }
+
 
 
     /**
@@ -140,60 +145,67 @@ class MenuController extends Controller
      */
     public function update(Request $request, Menu $menu)
     {
-      $validateddata = $request->validate([
-        'name' => 'required|min:3',
-        // 'modal' => 'required|regex:/([0-9]+[.,]*)+/',
-        'price' => 'required|regex:/([0-9]+[.,]*)+/',
-        'category' => 'required',
-        'image' => 'image|file|max:3048', // opsional
-        'description' => 'required'
-    ]);
+        $validateddata = $request->validate([
+            'name' => 'required|min:3',
+            'price' => 'required|regex:/([0-9]+[.,]*)+/',
+            'category' => 'required',
+            'image' => 'image|file|max:3048', // optional
+            'description' => 'required'
+        ]);
 
-    // $validateddata["modal"] = filter_var($request->modal, FILTER_SANITIZE_NUMBER_INT);
-    $validateddata["price"] = filter_var($request->price, FILTER_SANITIZE_NUMBER_INT);
+        // Bersihkan format harga
+        $validateddata["price"] = filter_var($request->price, FILTER_SANITIZE_NUMBER_INT);
 
-    if ($request->hasFile('picture')) {
-        // Hapus gambar lama jika ada
-        if ($menu->picture) {
-            $oldPublicPath = 'public/' . $menu->picture;
-            $oldPrivatePath = $menu->picture;
+        // Proses jika ada gambar baru di-upload
+        if ($request->hasFile('image')) {
 
-            if (Storage::exists($oldPublicPath)) {
-                Storage::delete($oldPublicPath);
+            // Hapus gambar lama jika ada
+            if ($menu->picture) {
+                $oldPublicPath = 'public/' . $menu->picture;
+                $oldPrivatePath = $menu->picture;
+
+                if (Storage::exists($oldPublicPath)) {
+                    Storage::delete($oldPublicPath);
+                }
+
+                if (Storage::exists($oldPrivatePath)) {
+                    Storage::delete($oldPrivatePath);
+                }
             }
 
-            if (Storage::exists($oldPrivatePath)) {
-                Storage::delete($oldPrivatePath);
-            }
+            // Buat nama file unik
+            $filename = uniqid() . '.' . $request->file('image')->getClientOriginalExtension();
+
+            // Path tujuan hasil resize crop
+            $resizePath = public_path('storage/menu/' . $filename);
+
+            // Resize dan crop ke ukuran 300x300
+            Image::make($request->file('image'))
+                ->fit(300, 300, function ($constraint) {
+                    $constraint->upsize();
+                })
+                ->save($resizePath);
+
+            // Simpan juga ke storage agar bisa diakses via Storage::url()
+            $storagePath = 'menu/' . $filename;
+            copy($resizePath, storage_path('app/public/' . $storagePath));
+
+            // Simpan path hasil ke database
+            $validateddata["picture"] = $storagePath;
         }
 
-        // Simpan gambar baru di storage/app/menu
-        $validateddata["picture"] = $request->file('picture')->store('/menu');
+        // Update data ke database
+        $menu->update($validateddata);
 
-        // Resize dan simpan versi tampil ke public_path
-        $filename = basename($validateddata["picture"]);
-        $resizePath = public_path('storage/menu/' . $filename);
+        // Simpan activity log
+        ActivityLog::create([
+            'user_id' => Auth::id(),
+            'action' => 'updated a menu ' . strtolower($request->name)
+        ]);
 
-        Image::make($request->file('picture'))->resize(600, 400, function ($constraint) {
-            $constraint->aspectRatio();
-            $constraint->upsize();
-        })->save($resizePath);
-
-        // Copy file ke storage/app/public/menu
-        $imagePath = storage_path('app/' . $validateddata["picture"]);
-        $publicCopyPath = storage_path('app/public/menu/' . $filename);
-        copy($imagePath, $publicCopyPath);
+        return redirect('/menu')->with('success', 'Menu has been updated!');
     }
 
-    $menu->update($validateddata);
-
-    ActivityLog::create([
-        'user_id' => Auth::id(),
-        'action' => 'updated a menu ' . strtolower($request->name)
-    ]);
-
-    return redirect('/menu')->with('success', 'Menu has been updated!');
-}
 
     /**
      * Remove the specified resource from storage.
