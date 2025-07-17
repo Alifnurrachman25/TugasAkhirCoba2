@@ -77,7 +77,7 @@ class UserController extends Controller
         ];
         ActivityLog::create($activity);
 
-        return redirect('/user')->with('success', 'New employee has been added !');
+        return redirect('/user')->with('success', 'Karyawan telah berhasil ditambahkan !');
     }
 
     /**
@@ -145,7 +145,7 @@ class UserController extends Controller
             'action' => 'edited the employee -' . strtolower($request->username)
         ];
         ActivityLog::create($activity);
-        return redirect('/user')->with('success', 'employee has been updated !');
+        return redirect('/user')->with('success', 'Karyawan telah di update !');
     }
 
     /**

@@ -46,7 +46,7 @@ Route::get('/user/edit/{user}', function (User $user) {
 })->middleware('auth');
 Route::post('/user/edit/{user}', [UserController::class, 'updateProfile'])->middleware('auth');
 
-Route::get('/menus/shows', [MenuController::class, 'show']);
+// Route::get('/menus/shows', [MenuController::class, 'show']);
 
 Route::get('/activityLog', [ActivityLogController::class, 'index']);
 
@@ -74,3 +74,4 @@ Route::post('/menu/update-order', [MenuController::class, 'updateOrder'])->name(
 
 Route::get('/report', [ReportController::class, 'index'])->middleware('auth');
 
+Route::get('/menu/show/{id}', [MenuController::class, 'show'])->name('menu.show')->middleware('auth');

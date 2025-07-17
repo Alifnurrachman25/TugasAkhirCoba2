@@ -26,7 +26,7 @@
                         <span class="nav-icon">
                             <i class="fa-solid fa-user"></i>
                         </span>
-                        <span class="nav-link-text">Karyawan</span>
+                        <span class="nav-link-text">Kelola Pengguna</span>
                         <span class="submenu-arrow">
                             <i class="fa-solid fa-chevron-down arrow"></i>
                         </span>

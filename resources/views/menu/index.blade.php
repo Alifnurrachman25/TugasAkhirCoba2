@@ -32,7 +32,7 @@
                                             </div>
                                             <ul class="dropdown-menu">
                                                 <li>
-                                                    <a class="dropdown-item" id="show-menu" data-bs-toggle="modal" data-bs-target="#show" role="button">
+                                                    <a class="dropdown-item show-menu" data-id="{{ $food->id }}" data-bs-toggle="modal" data-bs-target="#show" role="button">
                                                         <i class="fa-solid fa-eye mx-2"></i> View
                                                     </a>
                                                 </li>
@@ -129,7 +129,7 @@
                                             </div>
                                             <ul class="dropdown-menu">
                                                 <li>
-                                                    <a class="dropdown-item" id="show-menu" data-bs-toggle="modal" data-bs-target="#show" role="button">
+                                                    <a class="dropdown-item show-menu" data-id="{{ $drink->id }}" data-bs-toggle="modal" data-bs-target="#show" role="button">
                                                         <i class="fa-solid fa-eye mx-2"></i> View
                                                     </a>
                                                 </li>

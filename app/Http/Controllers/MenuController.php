@@ -109,13 +109,13 @@ class MenuController extends Controller
      * @param  \App\Models\Menu  $menu
      * @return \Illuminate\Http\Response
      */
-    public function show(Request $request, Menu $menu)
+    public function show($id)
     {
-        $id = $request->id;
-        $menu = $menu->find($id);
-        $menu->diff = $menu->created_at->diffForHumans();;
-        return $menu;
+        $menu = Menu::findOrFail($id);
+        $menu->diff = $menu->created_at->diffForHumans();
+        return response()->json($menu);
     }
+
 
     /**
      * Show the form for editing the specified resource.
