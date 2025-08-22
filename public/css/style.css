@@ -152,7 +152,7 @@
 /* sidebar  */
 
 #sidebar {
-    background-color: #820d0d;
+    background-color: #f0eeed;
 }
 
 .arrow {
@@ -164,7 +164,7 @@
 }
 
 .nav-link {
-    background-color: #ffffff;
+    background-color: #f0eeed;
 }
 
 .nav-link-text {
@@ -225,7 +225,7 @@
 }
 
 .app-header-inner {
-    background-color: #820d0d;
+    background-color: #5a5a5a;
     color: #fff; /* Change text color to white for better contrast */
 }
 

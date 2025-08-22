@@ -1,4 +1,4 @@
-<div id="app-sidepanel" class="app-sidepanel">
+<div id="app-sidepanel" class="app-sidepanel shadow-lg">
     <div id="sidepanel-drop" class="sidepanel-drop"></div>
     <div class="sidepanel-inner d-flex flex-column" id="sidebar">
         <a href="" id="sidepanel-close" class="sidepanel-close"><i class="fa-solid fa-xmark"></i></a>
@@ -66,7 +66,7 @@
                         <span class="nav-icon">
                             <i class="fa-solid fa-dollar-sign"></i>
                         </span>
-                        <span class="nav-link-text">Semua transaksi</span>
+                        <span class="nav-link-text">Transaksi</span>
                     </a>
                 </li>
                 <li class="nav-item">
