@@ -82,7 +82,14 @@ function updateTotal() {
         const price = parseInt(row.querySelector('.price-input').value) || 0;
         total += price;
     });
-    document.getElementById('total_transaction').value = total;
+
+    // Tambahkan 10% PPN
+    const ppn = total * 0.10;
+    const totalWithTax = total + ppn;
+
+    // Input form menampilkan total + PPN
+    document.getElementById('total_transaction').value = totalWithTax;
+
 }
 
 // Tambah item
@@ -136,8 +143,13 @@ function prepareData() {
         }
     });
 
+    // Hitung total + PPN 10%
+    const ppn = total * 0.10;
+    const totalWithTax = total + ppn;
+
     document.getElementById('menu_id_field').value = JSON.stringify(items);
-    document.getElementById('total_transaction').value = total;
+    // Input form dikirim dengan nilai setelah PPN
+    document.getElementById('total_transaction').value = totalWithTax;
     return true;
 }
 

@@ -1,9 +1,11 @@
 @extends('layouts.main')
-
 @section('container')
+
+
 <div class="col-auto">
     <h1 class="app-page-title mb-0">Transaction</h1>
 </div>
+
 <div class="col-10">
     <div class="page-utilities">
         <div class="row g-2 justify-content-start justify-content-md-end align-items-center">

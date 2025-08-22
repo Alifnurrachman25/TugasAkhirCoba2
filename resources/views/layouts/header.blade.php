@@ -31,6 +31,12 @@
         {{ session('success') }}
      </div>
     @endif
+
+     @if (session('error'))
+        <div id="alert-error" class="alert alert-danger alert-dismissible fade show" role="alert">
+            {{ session('error') }}
+        </div>
+    @endif
 </div>
 
 <script>
@@ -41,4 +47,13 @@
                 setTimeout(() => alert.remove(), 500);
             }
         }, 3000);
+
+        // auto hide error (lebih lama biar sempat dibaca)
+        setTimeout(function() {
+            const alertError = document.getElementById('alert-error');
+            if (alertError) {
+                alertError.classList.add('alert-slide-up');
+                setTimeout(() => alertError.remove(), 500);
+            }
+        }, 5000);
  </script>

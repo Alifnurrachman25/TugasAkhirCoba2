@@ -169,6 +169,11 @@ class TransactionController extends Controller
 
     $transaction = Transaction::with(['transaction_details.menu'])->findOrFail($id);
 
+
+    if ($transaction->status === 'paid') {
+        return redirect('/transaction')->with('error', 'Transaction sudah dibayar dan tidak bisa di edit!');
+    }
+
     return view('transaction.edit', [
         'transaction' => $transaction,
         'foods' => Menu::where('category', 'food')->latest()->get(),
@@ -186,7 +191,11 @@ class TransactionController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $transaction = Transaction::findOrFail($id);
 
+        if ($transaction->status === 'paid') {
+        return redirect('/transaction')->with('error', 'Transaction sudah dibayar dan tidak bisa di edit!');
+        }
 
         $request->validate([
             'no_table' => 'required',
@@ -196,8 +205,8 @@ class TransactionController extends Controller
         ]);
 
 
-        $transaction = Transaction::findOrFail($id);
         $transaction->no_table = $request->no_table;
+        // Tambahkan PPN 10%
         $transaction->total_transaction = $request->total_transaction;
         // $transaction->payment_method = $request->payment_method;
         $transaction->updated_at = Carbon::now();
