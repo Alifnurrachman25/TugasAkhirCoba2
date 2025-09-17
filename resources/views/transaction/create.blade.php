@@ -47,12 +47,12 @@
                 <ul class="nav nav-tabs d-flex justify-content-center" data-aos="fade-up" data-aos-delay="200">
                     <li class="nav-item">
                         <a class="nav-link active" data-bs-toggle="tab" data-bs-target="#food">
-                            <h4>Food</h4>
+                            <h4>Makanan</h4>
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" data-bs-toggle="tab" data-bs-target="#drink">
-                            <h4>Drink's</h4>
+                            <h4>Minuman</h4>
                         </a>
                     </li>
                     {{-- <li class="nav-item">
